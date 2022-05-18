@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rpt="http://openoffice.org/2005/report" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:css3t="http://www.w3.org/TR/css3-text/" office:version="1.2" office:mimetype="application/vnd.oasis.opendocument.text">
+ <office:meta><meta:initial-creator>Cristian Achim</meta:initial-creator><meta:creation-date>2012-05-23T02:05:44</meta:creation-date><meta:generator>LibreOffice/3.5$Linux_X86_64 LibreOffice_project/350m1$Build-2</meta:generator><dc:date>2013-02-07T09:25:29</dc:date><dc:creator>Cristian Achim</dc:creator><meta:editing-duration>PT8H26M13S</meta:editing-duration><meta:editing-cycles>433</meta:editing-cycles><meta:document-statistic meta:table-count="0" meta:image-count="0" meta:object-count="0" meta:page-count="5" meta:paragraph-count="121" meta:word-count="1487" meta:character-count="11420" meta:non-whitespace-character-count="8652"/></office:meta>
+ <office:settings>
+  <config:config-item-set config:name="ooo:view-settings">
+   <config:config-item config:name="ViewAreaTop" config:type="long">18547</config:config-item>
+   <config:config-item config:name="ViewAreaLeft" config:type="long">0</config:config-item>
+   <config:config-item config:name="ViewAreaWidth" config:type="long">23599</config:config-item>
+   <config:config-item config:name="ViewAreaHeight" config:type="long">8744</config:config-item>
+   <config:config-item config:name="ShowRedlineChanges" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="InBrowseMode" config:type="boolean">false</config:config-item>
+   <config:config-item-map-indexed config:name="Views">
+    <config:config-item-map-entry>
+     <config:config-item config:name="ViewId" config:type="string">view2</config:config-item>
+     <config:config-item config:name="ViewLeft" config:type="long">12349</config:config-item>
+     <config:config-item config:name="ViewTop" config:type="long">21465</config:config-item>
+     <config:config-item config:name="VisibleLeft" config:type="long">0</config:config-item>
+     <config:config-item config:name="VisibleTop" config:type="long">18547</config:config-item>
+     <config:config-item config:name="VisibleRight" config:type="long">23597</config:config-item>
+     <config:config-item config:name="VisibleBottom" config:type="long">27289</config:config-item>
+     <config:config-item config:name="ZoomType" config:type="short">3</config:config-item>
+     <config:config-item config:name="ViewLayoutColumns" config:type="short">1</config:config-item>
+     <config:config-item config:name="ViewLayoutBookMode" config:type="boolean">false</config:config-item>
+     <config:config-item config:name="ZoomFactor" config:type="short">148</config:config-item>
+     <config:config-item config:name="IsSelectedFrame" config:type="boolean">false</config:config-item>
+    </config:config-item-map-entry>
+   </config:config-item-map-indexed>
+  </config:config-item-set>
+  <config:config-item-set config:name="ooo:configuration-settings">
+   <config:config-item config:name="PrintTables" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="AddParaTableSpacingAtStart" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="ChartAutoUpdate" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="IsLabelDocument" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="MathBaselineAlignment" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="OutlineLevelYieldsNumbering" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintLeftPages" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="AlignTabStopPosition" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="DoNotJustifyLinesWithManualBreak" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintTextPlaceholder" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="UseOldNumbering" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintProspectRTL" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="ProtectForm" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="CurrentDatabaseCommand" config:type="string"/>
+   <config:config-item config:name="PrintBlackFonts" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="SmallCapsPercentage66" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="CharacterCompressionType" config:type="short">0</config:config-item>
+   <config:config-item config:name="PrintControls" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrintHiddenText" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="IsKernAsianPunctuation" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="UseFormerTextWrapping" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintProspect" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintEmptyPages" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="UnbreakableNumberings" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="UseFormerObjectPositioning" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintReversed" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="TabsRelativeToIndent" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="TableRowKeep" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="ConsiderTextWrapOnObjPos" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintRightPages" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrintPaperFromSetup" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="AddFrameOffsets" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="UpdateFromTemplate" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="AddParaSpacingToTableCells" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrintSingleJobs" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="AddExternalLeading" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrinterIndependentLayout" config:type="string">high-resolution</config:config-item>
+   <config:config-item config:name="LinkUpdateMode" config:type="short">1</config:config-item>
+   <config:config-item config:name="PrintAnnotationMode" config:type="short">0</config:config-item>
+   <config:config-item config:name="UseOldPrinterMetrics" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="RedlineProtectionKey" config:type="base64Binary"/>
+   <config:config-item config:name="PrinterName" config:type="string"/>
+   <config:config-item config:name="CollapseEmptyCellPara" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrinterSetup" config:type="base64Binary"/>
+   <config:config-item config:name="IgnoreFirstLineIndentInNumbering" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="InvertBorderSpacing" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintPageBackground" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="DoNotCaptureDrawObjsOnPage" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="TabOverflow" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="ApplyUserData" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="TabAtLeftIndentForParagraphsInList" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="UnxForceZeroExtLeading" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="SaveVersionOnClose" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintFaxName" config:type="string"/>
+   <config:config-item config:name="PrintDrawings" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="AddParaTableSpacing" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="LoadReadonly" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintGraphics" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="FieldAutoUpdate" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="AllowPrintJobCancel" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="SaveGlobalDocumentLinks" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="CurrentDatabaseDataSource" config:type="string"/>
+   <config:config-item config:name="UseFormerLineSpacing" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="IgnoreTabsAndBlanksForLineCalculation" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="CurrentDatabaseCommandType" config:type="int">0</config:config-item>
+   <config:config-item config:name="DoNotResetParaAttrsForNumFont" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="ClipAsCharacterAnchoredWriterFlyFrames" config:type="boolean">false</config:config-item>
+  </config:config-item-set>
+ </office:settings>
+ <office:scripts>
+  <office:script script:language="ooo:Basic">
+   <ooo:libraries xmlns:ooo="http://openoffice.org/2004/office" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+  </office:script>
+ </office:scripts>
+ <office:font-face-decls>
+  <style:font-face style:name="Lohit Hindi1" svg:font-family="&apos;Lohit Hindi&apos;"/>
+  <style:font-face style:name="Courier 10 Pitch" svg:font-family="&apos;Courier 10 Pitch&apos;" style:font-pitch="fixed"/>
+  <style:font-face style:name="Times New Roman" svg:font-family="&apos;Times New Roman&apos;" style:font-family-generic="roman" style:font-pitch="variable"/>
+  <style:font-face style:name="Arial" svg:font-family="Arial" style:font-family-generic="swiss" style:font-pitch="variable"/>
+  <style:font-face style:name="Droid Sans Fallback" svg:font-family="&apos;Droid Sans Fallback&apos;" style:font-family-generic="system" style:font-pitch="variable"/>
+  <style:font-face style:name="Lohit Hindi" svg:font-family="&apos;Lohit Hindi&apos;" style:font-family-generic="system" style:font-pitch="variable"/>
+ </office:font-face-decls>
+ <office:styles>
+  <style:default-style style:family="graphic">
+   <style:graphic-properties svg:stroke-color="#808080" draw:fill-color="#cfe7f5" fo:wrap-option="no-wrap" draw:shadow-offset-x="0.1181in" draw:shadow-offset-y="0.1181in" draw:start-line-spacing-horizontal="0.1114in" draw:start-line-spacing-vertical="0.1114in" draw:end-line-spacing-horizontal="0.1114in" draw:end-line-spacing-vertical="0.1114in" style:flow-with-text="false"/>
+   <style:paragraph-properties style:text-autospace="ideograph-alpha" style:line-break="strict" style:writing-mode="lr-tb" style:font-independent-line-spacing="false">
+    <style:tab-stops/>
+   </style:paragraph-properties>
+   <style:text-properties style:use-window-font-color="true" fo:font-size="12pt" fo:language="en" fo:country="US" style:letter-kerning="true" style:font-size-asian="10.5pt" style:language-asian="zh" style:country-asian="CN" style:font-size-complex="12pt" style:language-complex="hi" style:country-complex="IN"/>
+  </style:default-style>
+  <style:default-style style:family="paragraph">
+   <style:paragraph-properties fo:hyphenation-ladder-count="no-limit" style:text-autospace="ideograph-alpha" style:punctuation-wrap="hanging" style:line-break="strict" style:tab-stop-distance="0.4925in" style:writing-mode="page"/>
+   <style:text-properties style:use-window-font-color="true" style:font-name="Times New Roman" fo:font-size="12pt" fo:language="en" fo:country="US" style:letter-kerning="true" style:font-name-asian="Droid Sans Fallback" style:font-size-asian="10.5pt" style:language-asian="zh" style:country-asian="CN" style:font-name-complex="Lohit Hindi" style:font-size-complex="12pt" style:language-complex="hi" style:country-complex="IN" fo:hyphenate="false" fo:hyphenation-remain-char-count="2" fo:hyphenation-push-char-count="2"/>
+  </style:default-style>
+  <style:default-style style:family="table">
+   <style:table-properties table:border-model="collapsing"/>
+  </style:default-style>
+  <style:default-style style:family="table-row">
+   <style:table-row-properties fo:keep-together="auto"/>
+  </style:default-style>
+  <style:style style:name="Standard" style:family="paragraph" style:class="text"/>
+  <style:style style:name="Heading" style:family="paragraph" style:parent-style-name="Standard" style:next-style-name="Text_20_body" style:class="text">
+   <style:paragraph-properties fo:margin-top="0.1665in" fo:margin-bottom="0.0835in" fo:keep-with-next="always"/>
+   <style:text-properties style:font-name="Arial" fo:font-size="14pt" style:font-name-asian="Droid Sans Fallback" style:font-size-asian="14pt" style:font-name-complex="Lohit Hindi" style:font-size-complex="14pt"/>
+  </style:style>
+  <style:style style:name="Text_20_body" style:display-name="Text body" style:family="paragraph" style:parent-style-name="Standard" style:class="text">
+   <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.0835in"/>
+  </style:style>
+  <style:style style:name="List" style:family="paragraph" style:parent-style-name="Text_20_body" style:class="list">
+   <style:text-properties style:font-size-asian="12pt" style:font-name-complex="Lohit Hindi1"/>
+  </style:style>
+  <style:style style:name="Caption" style:family="paragraph" style:parent-style-name="Standard" style:class="extra">
+   <style:paragraph-properties fo:margin-top="0.0835in" fo:margin-bottom="0.0835in" text:number-lines="false" text:line-number="0"/>
+   <style:text-properties fo:font-size="12pt" fo:font-style="italic" style:font-size-asian="12pt" style:font-style-asian="italic" style:font-name-complex="Lohit Hindi1" style:font-size-complex="12pt" style:font-style-complex="italic"/>
+  </style:style>
+  <style:style style:name="Index" style:family="paragraph" style:parent-style-name="Standard" style:class="index">
+   <style:paragraph-properties text:number-lines="false" text:line-number="0"/>
+   <style:text-properties style:font-size-asian="12pt" style:font-name-complex="Lohit Hindi1"/>
+  </style:style>
+  <style:style style:name="Table_20_Contents" style:display-name="Table Contents" style:family="paragraph" style:parent-style-name="Standard" style:class="extra">
+   <style:paragraph-properties text:number-lines="false" text:line-number="0"/>
+  </style:style>
+  <style:style style:name="Numbering_20_Symbols" style:display-name="Numbering Symbols" style:family="text"/>
+  <style:style style:name="Internet_20_link" style:display-name="Internet link" style:family="text">
+   <style:text-properties fo:color="#000080" fo:language="zxx" fo:country="none" style:text-underline-style="solid" style:text-underline-width="auto" style:text-underline-color="font-color" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
+  </style:style>
+  <text:outline-style style:name="Outline">
+   <text:outline-level-style text:level="1" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.3in" fo:text-indent="-0.3in" fo:margin-left="0.3in"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="2" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.4in" fo:text-indent="-0.4in" fo:margin-left="0.4in"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="3" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.5in" fo:text-indent="-0.5in" fo:margin-left="0.5in"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="4" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.6in" fo:text-indent="-0.6in" fo:margin-left="0.6in"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="5" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.7in" fo:text-indent="-0.7in" fo:margin-left="0.7in"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="6" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.8in" fo:text-indent="-0.8in" fo:margin-left="0.8in"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="7" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.9in" fo:text-indent="-0.9in" fo:margin-left="0.9in"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="8" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1in" fo:text-indent="-1in" fo:margin-left="1in"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="9" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.1in" fo:text-indent="-1.1in" fo:margin-left="1.1in"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="10" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.2in" fo:text-indent="-1.2in" fo:margin-left="1.2in"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+  </text:outline-style>
+  <text:notes-configuration text:note-class="footnote" style:num-format="1" text:start-value="0" text:footnotes-position="page" text:start-numbering-at="document"/>
+  <text:notes-configuration text:note-class="endnote" style:num-format="i" text:start-value="0"/>
+  <text:linenumbering-configuration text:number-lines="false" text:offset="0.1965in" style:num-format="1" text:number-position="left" text:increment="5"/>
+ </office:styles>
+ <office:automatic-styles>
+  <style:style style:name="P1" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:text-align="start" style:justify-single-word="false">
+    <style:tab-stops>
+     <style:tab-stop style:position="0.4925in"/>
+    </style:tab-stops>
+   </style:paragraph-properties>
+   <style:text-properties style:font-name="Times New Roman" fo:font-size="12pt" fo:language="ro" fo:country="RO" style:font-size-asian="12pt" style:font-name-complex="Arial" style:font-size-complex="12pt"/>
+  </style:style>
+  <style:style style:name="P2" style:family="paragraph" style:parent-style-name="Standard">
+   <style:text-properties fo:language="ro" fo:country="RO"/>
+  </style:style>
+  <style:style style:name="P3" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties>
+    <style:tab-stops>
+     <style:tab-stop style:position="0.4925in"/>
+    </style:tab-stops>
+   </style:paragraph-properties>
+   <style:text-properties fo:language="ro" fo:country="RO" style:font-size-complex="12pt"/>
+  </style:style>
+  <style:style style:name="P4" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:line-height="130%" fo:text-align="center" style:justify-single-word="false"/>
+   <style:text-properties fo:font-variant="small-caps" style:font-name="Arial" fo:font-size="24pt" fo:letter-spacing="0.0138in" fo:language="ro" fo:country="RO" fo:font-weight="bold" style:font-size-asian="24pt" style:font-weight-asian="bold" style:font-name-complex="Arial" style:font-size-complex="24pt"/>
+  </style:style>
+  <style:style style:name="P5" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false">
+    <style:tab-stops>
+     <style:tab-stop style:position="0.4925in"/>
+    </style:tab-stops>
+   </style:paragraph-properties>
+   <style:text-properties style:font-name="Arial" fo:font-size="14pt" fo:language="ro" fo:country="RO" fo:font-weight="bold" style:font-size-asian="14pt" style:font-weight-asian="bold" style:font-name-complex="Arial" style:font-size-complex="14pt"/>
+  </style:style>
+  <style:style style:name="P6" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false">
+    <style:tab-stops>
+     <style:tab-stop style:position="0.4925in"/>
+    </style:tab-stops>
+   </style:paragraph-properties>
+   <style:text-properties style:font-name="Arial" fo:font-size="14pt" fo:language="ro" fo:country="RO" style:font-size-asian="14pt" style:font-name-complex="Arial" style:font-size-complex="14pt"/>
+  </style:style>
+  <style:style style:name="P7" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:text-align="end" style:justify-single-word="false">
+    <style:tab-stops>
+     <style:tab-stop style:position="0.4925in"/>
+    </style:tab-stops>
+   </style:paragraph-properties>
+   <style:text-properties style:font-name="Arial" fo:font-size="14pt" fo:language="ro" fo:country="RO" style:font-size-asian="14pt" style:font-name-complex="Arial" style:font-size-complex="14pt"/>
+  </style:style>
+  <style:style style:name="P8" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:line-height="120%" fo:text-align="start" style:justify-single-word="false">
+    <style:tab-stops>
+     <style:tab-stop style:position="0.4925in"/>
+    </style:tab-stops>
+   </style:paragraph-properties>
+   <style:text-properties style:font-name="Arial" fo:font-size="14pt" fo:language="ro" fo:country="RO" style:font-size-asian="14pt" style:font-name-complex="Arial" style:font-size-complex="14pt"/>
+  </style:style>
+  <style:style style:name="P9" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false">
+    <style:tab-stops>
+     <style:tab-stop style:position="0.4925in"/>
+    </style:tab-stops>
+   </style:paragraph-properties>
+   <style:text-properties style:font-name="Arial" fo:font-size="16pt" fo:letter-spacing="0.0138in" fo:language="ro" fo:country="RO" fo:font-weight="bold" style:font-size-asian="16pt" style:font-weight-asian="bold" style:font-name-complex="Arial" style:font-size-complex="16pt"/>
+  </style:style>
+  <style:style style:name="P10" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:text-align="start" style:justify-single-word="false">
+    <style:tab-stops>
+     <style:tab-stop style:position="0.4925in"/>
+    </style:tab-stops>
+   </style:paragraph-properties>
+  </style:style>
+  <style:style style:name="P11" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:text-align="start" style:justify-single-word="false">
+    <style:tab-stops>
+     <style:tab-stop style:position="0.4925in"/>
+    </style:tab-stops>
+   </style:paragraph-properties>
+   <style:text-properties style:font-name="Courier 10 Pitch" fo:font-size="8pt" fo:language="ro" fo:country="RO" style:font-size-asian="8pt" style:font-name-complex="Arial" style:font-size-complex="8pt"/>
+  </style:style>
+  <style:style style:name="T1" style:family="text">
+   <style:text-properties style:font-name="Times New Roman" fo:font-size="12pt" fo:language="ro" fo:country="RO" style:font-size-asian="12pt" style:font-name-complex="Arial" style:font-size-complex="12pt"/>
+  </style:style>
+  <style:style style:name="T2" style:family="text">
+   <style:text-properties style:font-name="Courier 10 Pitch" fo:font-size="8pt" style:font-size-asian="8pt" style:font-size-complex="8pt"/>
+  </style:style>
+  <style:page-layout style:name="pm1">
+   <style:page-layout-properties fo:page-width="8.5in" fo:page-height="11in" style:num-format="1" style:print-orientation="portrait" fo:margin="0.7874in" fo:margin-top="0.7874in" fo:margin-bottom="0.7874in" fo:margin-left="0.7874in" fo:margin-right="0.7874in" style:writing-mode="lr-tb" style:footnote-max-height="0in">
+    <style:footnote-sep style:width="0.0071in" style:distance-before-sep="0.0398in" style:distance-after-sep="0.0398in" style:line-style="solid" style:adjustment="left" style:rel-width="25%" style:color="#000000"/>
+   </style:page-layout-properties>
+   <style:header-style/>
+   <style:footer-style/>
+  </style:page-layout>
+ </office:automatic-styles>
+ <office:master-styles>
+  <style:master-page style:name="Standard" style:page-layout-name="pm1"/>
+ </office:master-styles>
+ <office:body>
+  <office:text text:use-soft-page-breaks="true">
+   <text:sequence-decls>
+    <text:sequence-decl text:display-outline-level="0" text:name="Illustration"/>
+    <text:sequence-decl text:display-outline-level="0" text:name="Table"/>
+    <text:sequence-decl text:display-outline-level="0" text:name="Text"/>
+    <text:sequence-decl text:display-outline-level="0" text:name="Drawing"/>
+   </text:sequence-decls>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P2"/>
+   <text:p text:style-name="P4">Simularea traficului pe platforma postgis cu suport pgrouting , openstreetmap , openlayers și mapserver</text:p>
+   <text:p text:style-name="P5"/>
+   <text:p text:style-name="P9">Rezumatul proiectului de diplomă</text:p>
+   <text:p text:style-name="P5"/>
+   <text:p text:style-name="P5"/>
+   <text:p text:style-name="P6"/>
+   <text:p text:style-name="P7">Cristian Achim</text:p>
+   <text:p text:style-name="P8">Conducător:</text:p>
+   <text:p text:style-name="P8">Conf.dr.ing. Marius Marcu</text:p>
+   <text:p text:style-name="P8"/>
+   <text:p text:style-name="P3"/>
+   <text:p text:style-name="P3"/>
+   <text:p text:style-name="P3"/>
+   <text:p text:style-name="P6">Timişoara,</text:p>
+   <text:p text:style-name="P6">2013</text:p>
+   <text:p text:style-name="P6"/>
+   <text:p text:style-name="P6"/>
+   <text:p text:style-name="P6"/>
+   <text:p text:style-name="P6"/>
+   <text:p text:style-name="P6"/>
+   <text:p text:style-name="P6"/>
+   <text:p text:style-name="P6"/>
+   <text:p text:style-name="P6"/>
+   <text:p text:style-name="P1"><text:soft-page-break/><text:tab/>I Introducere</text:p>
+   <text:p text:style-name="P1"><text:tab/>Am realizat o aplicație care permite introducerea rutelor unor mașini pe o hartă , simularea deplasării mașinilor cu viteză constantă accesibilă prin opțiunea de avansare a simulării și afișarea poziției mașinilor în starea curentă a simulării . Aplicația aparține domeniului GIS (geographic information systems – sisteme informaționale geografice) care studiază vizualizarea și prelucrarea datelor în raport cu o hartă prin intermediul sistemelor de calcul . </text:p>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P1"><text:tab/>II Concepte fundamentale</text:p>
+   <text:p text:style-name="P1"><text:tab/>Aplicația pe care am creat-o se bazează pe funcționalitățile a cinci proiecte create ca și librării pentru alte aplicații mai specializate din domeniul GIS . Acestea sunt postgis , openstreetmap , mapserver , openlayers și pgrouting .</text:p>
+   <text:p text:style-name="P1"><text:tab/>Postgis reprezintă gruparea unei serie de extensii ale bazei de date postgresql care permit stocarea și manipularea de date geospațiale . Se definesc obiectele cu localizare geografică punct , linie , poligon , multi-punct , multi-linie și altele conform standardului SFA(simple feature access) al Open Geospatial Consortium . Openstreetmap este un proiect colaborativ de creare a unei baze de date cu licență liberă care să cuprindă date despre țărmuri , granițe , orașe , rețeaua de drumuri și alte puncte de interes geografic pentru tot globul . Datele de codificare a entităților geografice sunt codificate într-un format xml care permite exportarea către postgis prin unelte de exportare specifice pentru mapserver și pgrouting . Mapserver este o aplicație care permite randarea imaginilor unei hărți pronind de la datele dintr-o bază de date postgis și preluarea de către un client a imaginilor randate printr-o interfață cgi prin standardul de interogare WMS . Openlayers este o librărie javascript care funcționează în browsere și care permite preluarea și apoi randarea de imagini ale unei hărți prin standardul WMS și a unor obiecte geospațiale codificate textual în formatul SFA . Pgrouting este o extensie a postgis care include mai mulți algoritmi de găsire a rutei între două puncte , inclusiv algoritmul lui Dijkstra . Graful pe care se caută rutele este importat de un program de importare care folosește date openstreetmap și se regăsește într-o bază de date postgis .</text:p>
+   <text:p text:style-name="P1"><text:tab/>Simularea traficului pornește de la introducerea pe harta desenată de openlayers în browserul web a punctelor de plecare și sosire a mașinii care se introduce în simulare . Acestea sunt transmise pe server și prelucrate prima dată pentru a determina nodurile intermediare și distanțele între fiecare două noduri în parte ale rutei găsite de o funcție de rutare a pgrouting în graficul de rutare . Viteza constantă a unei mașini o realizeaz pe aceste date intermediare și se obține o conexiune între două noduri unde se află mașina și un număr care reprezintă poziția relativă față de cele două noduri . Apoi determin poziția finală pe hartă prin interpolare pe o structură multi-punct care are o reprezentare detaliată a traseului între noduri care nu este folosește de algoritmii de rutare ai pgrouting sau de calculul poziției în simulare pe care l-am realizat . În final poziția mașinilor care sunt prezente în simulare este transmisă către browserul client .</text:p>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P1"><text:tab/>III Arhitectura aplicației</text:p>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"><text:s/>+------+ <text:s/>Adaugă <text:s text:c="3"/>+------+</text:p>
+   <text:p text:style-name="P11"><text:s/>| <text:s text:c="5"/>|+----------&gt;| <text:s text:c="5"/>|</text:p>
+   <text:p text:style-name="P11"><text:s/>| <text:s text:c="5"/>| <text:s/>mașină <text:s text:c="3"/>| <text:s text:c="5"/>| <text:s text:c="4"/>+-------------+</text:p>
+   <text:p text:style-name="P11"><text:s/>| <text:s text:c="5"/>| <text:s text:c="11"/>| <text:s text:c="5"/>|+---&gt;| <text:s text:c="12"/>|</text:p>
+   <text:p text:style-name="P11"><text:s/>| <text:s text:c="5"/>| <text:s/>Avansează |Server| <text:s text:c="4"/>| Baza de date|</text:p>
+   <text:p text:style-name="P11"><text:s/>|Client|+----------&gt;| <text:s text:c="5"/>| <text:s text:c="4"/>| geospațială |</text:p>
+   <text:p text:style-name="P11"><text:s/>| <text:s text:c="5"/>| simularea <text:s/>| <text:s text:c="5"/>|&lt;---+| <text:s text:c="12"/>|</text:p>
+   <text:p text:style-name="P11"><text:s/>| <text:s text:c="5"/>| <text:s text:c="11"/>| <text:s text:c="5"/>| <text:s text:c="4"/>+-------------+</text:p>
+   <text:p text:style-name="P11"><text:s/>| <text:s text:c="5"/>|&lt;----------+| <text:s text:c="5"/>|</text:p>
+   <text:p text:style-name="P11"><text:s/>+------+ <text:s text:c="11"/>+------+ </text:p>
+   <text:p text:style-name="P1"><text:tab/>Modulul client se ocupă de afișarea hărții , introducerea unei noi mașini în simulare rute și afișarea mașinilor după avansarea simulării .</text:p>
+   <text:p text:style-name="P1"><text:tab/>Modulul server este un liant care permite interacțiunea între clientul care interacționează cu <text:soft-page-break/>utilizatorul și baza de date geospațială care păstrează și prelucrează datele geospațiale .</text:p>
+   <text:p text:style-name="P1"><text:tab/>Modulul bază de date geospațială are rolul de a păstra datele despre ruta unei mașini și poziția mașinii în simulare pe ruta respectivă , rolul de a implementa simularea și prelucrarea datelor de poziționare a mașinii , iar apoi permite o preluare simplă a pozițiilor mașinilor în simulare de către modulul client .</text:p>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P1"><text:tab/>IV Implementare</text:p>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P11"><text:s text:c="10"/>+--------------------------------&gt;</text:p>
+   <text:p text:style-name="P11"><text:s text:c="10"/>|Cerere mapserver coordonate hartă</text:p>
+   <text:p text:style-name="P11"><text:s text:c="10"/>| <text:s text:c="2"/>+----------------------------+</text:p>
+   <text:p text:style-name="P11"><text:s text:c="10"/>+ <text:s text:c="2"/>v <text:s text:c="3"/>Imaginea de afișat</text:p>
+   <text:p text:style-name="P11">+---------------------+</text:p>
+   <text:p text:style-name="P11">|Interfață html cu <text:s text:c="3"/>| <text:s text:c="2"/>Avansează simularea</text:p>
+   <text:p text:style-name="P11">|textbox-uri ,butoane,|+--------------------+</text:p>
+   <text:p text:style-name="P11">|harta openlayers , <text:s text:c="2"/>|Adaugă mașină <text:s text:c="7"/>|</text:p>
+   <text:p text:style-name="P11">|callback-uri către <text:s text:c="2"/>|+-----------+ <text:s text:c="7"/>|</text:p>
+   <text:p text:style-name="P11">|simulation_manager <text:s text:c="2"/>|&lt;--------+ <text:s/>| <text:s text:c="7"/>|</text:p>
+   <text:p text:style-name="P11">+---------------------+ <text:s/>Erori <text:s/>| <text:s/>| <text:s text:c="7"/>|</text:p>
+   <text:p text:style-name="P11"><text:s text:c="2"/>^ <text:s/>^ <text:s text:c="25"/>| <text:s/>| <text:s text:c="7"/>|</text:p>
+   <text:p text:style-name="P11"><text:s text:c="2"/>| <text:s/>| <text:s/>+---------------+ <text:s text:c="6"/>| <text:s/>| <text:s text:c="7"/>|</text:p>
+   <text:p text:style-name="P11"><text:s text:c="2"/>| <text:s/>+-+|markers_manager|&lt;--+ <text:s text:c="2"/>+ <text:s/>v <text:s text:c="7"/>v</text:p>
+   <text:p text:style-name="P11"><text:s text:c="2"/>| <text:s text:c="4"/>+---------------+ <text:s/>+------------------+ Cereri către</text:p>
+   <text:p text:style-name="P11"><text:s text:c="2"/>| <text:s text:c="23"/>|simulation_manager|+------------&gt;</text:p>
+   <text:p text:style-name="P11"><text:s text:c="2"/>| <text:s text:c="5"/>+--------------+ <text:s/>+------------------+ <text:s/>server(AJAX)</text:p>
+   <text:p text:style-name="P11"><text:s text:c="2"/>+-----+|routes_manager|&lt;--+ <text:s text:c="11"/>^</text:p>
+   <text:p text:style-name="P11"><text:s text:c="9"/>+--------------+ <text:s text:c="15"/>+------------------+</text:p>
+   <text:p text:style-name="P11"><text:s text:c="43"/>Rezultate cereri</text:p>
+   <text:p text:style-name="P11"><text:tab/><text:tab/><text:tab/>MODULUL CLIENT</text:p>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P1"><text:tab/>Modulul client pornește de la interfața cu utilizatorul . Aici se ragăsesc butonul de adăugare a unei mașini și butonul de avansare a simulării precum textbox-ul pentru introducerea numărului de secunde cât să fie avansată simularea . Se mai regasește harta controlată de librăria openlayers cu o funcționalitate extinsă pentru selectarea a două puncte pe hartă a căror coordonate pot fi citite precum și posibilitatea afișării unei rute în format multi-linie citit de pe server și a unui marker la coordonata unde se află poziția unei mașini în simulare .</text:p>
+   <text:p text:style-name="P1"><text:tab/>Obiectul-clasă simulation_manager primește comenzile utilizatorului , iar apoi le trimite către server . Când apar rezultatele sub forma rutei mașinii introduse în simulare , respectiv lista de coordonate a mașinilor din simulare acestea sunt afișate de către modulul markers_manager sau routes_manager pe hartă sau se va afișa un mesaj dacă nu sunt rezultate de afișat .</text:p>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P11"><text:tab/><text:tab/>+--------------------+ <text:s text:c="23"/>+------------------+</text:p>
+   <text:p text:style-name="P11"><text:s text:c="15"/>| +------------------&gt; <text:s text:c="23"/>| +----------------&gt;</text:p>
+   <text:p text:style-name="P11"><text:s text:c="3"/>Cerere cgi <text:s/>| |Ruta de afișat <text:s text:c="10"/>Cerere cgi secunde| |Stadiul simulării</text:p>
+   <text:p text:style-name="P11"><text:s text:c="3"/>2 coordonate| |format multi-linie <text:s text:c="4"/>avansarea <text:s/>simulării| |</text:p>
+   <text:p text:style-name="P11"><text:s text:c="15"/>v + <text:s text:c="42"/>v +</text:p>
+   <text:p text:style-name="P11"><text:s/>+-----------------------------------+ <text:s text:c="15"/>+---------------+</text:p>
+   <text:p text:style-name="P11"><text:s/>|car_to_simulation_from_2_points.php| <text:s text:c="15"/>|advance_sim.php|</text:p>
+   <text:p text:style-name="P11"><text:s/>+-----------------------------------+ <text:s text:c="15"/>+---------------+</text:p>
+   <text:p text:style-name="P11"><text:s text:c="19"/>+ ^ <text:s text:c="39"/>+ ^</text:p>
+   <text:p text:style-name="P11"><text:s/>Interogări sql pt | |Ruta de afișat <text:s text:c="5"/>Interogare către <text:s text:c="3"/>| | Stadiul simularii</text:p>
+   <text:p text:style-name="P11"><text:s/>introducerea și <text:s text:c="2"/>| |format multi-linie <text:s/>funcție pl/pgsql <text:s text:c="3"/>| |</text:p>
+   <text:p text:style-name="P11"><text:s/>preluarea rutei <text:s text:c="2"/>| | <text:s text:c="19"/>pornirea simulării <text:s/>| |</text:p>
+   <text:p text:style-name="P11"><text:s/>&lt;-----------------+ | <text:s text:c="20"/>&lt;------------------+ |</text:p>
+   <text:p text:style-name="P11"><text:s/>+-------------------+ <text:s text:c="20"/>+--------------------+</text:p>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"><text:soft-page-break/></text:p>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11"><text:s text:c="11"/>+-------------------+</text:p>
+   <text:p text:style-name="P11"><text:s text:c="11"/>| +-----------------&gt;</text:p>
+   <text:p text:style-name="P11"><text:s text:c="11"/>| |Lista coordonatelor</text:p>
+   <text:p text:style-name="P11"><text:s text:c="11"/>| |mașinilor simulate</text:p>
+   <text:p text:style-name="P11"><text:s text:c="11"/>v +</text:p>
+   <text:p text:style-name="P11"><text:s/>+---------------------+</text:p>
+   <text:p text:style-name="P11"><text:s/>|query_cars_in_sim.php|</text:p>
+   <text:p text:style-name="P11"><text:s/>+---------------------+</text:p>
+   <text:p text:style-name="P11"><text:s text:c="11"/>+ ^</text:p>
+   <text:p text:style-name="P11"><text:s text:c="11"/>| |Lista coordonatelor</text:p>
+   <text:p text:style-name="P11"><text:s text:c="11"/>| |mașinilor simulate</text:p>
+   <text:p text:style-name="P11"><text:s text:c="11"/>| |</text:p>
+   <text:p text:style-name="P11"><text:s/>&lt;---------+ |</text:p>
+   <text:p text:style-name="P11"><text:s text:c="2"/>+----------+</text:p>
+   <text:p text:style-name="P11"><text:tab/><text:tab/><text:tab/><text:tab/><text:tab/>MODULUL SERVER</text:p>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P1"><text:tab/>Modulul server este implementat pornind de la un server apache care interacționează cu interpretorul php pentru a răspunde la cereri cgi din partea clientului .</text:p>
+   <text:p text:style-name="P1"><text:tab/>Pentru introducerea unei noi mașini în simulare apar cele două coordonate ale punctelor de start și sosire . Se produc interogări care să determine ruta mașinii , să introducă ruta în tabela de rute , să returneze ruta pentru afișarea în client și să inițializeze tabela mașinilor simulate .</text:p>
+   <text:p text:style-name="P1"><text:tab/>Avansarea simulării este însoțită de numărul de secunde în timp simulat care trebuie simulate . Se interoghează funcția din baza de date geospațială care realizează simularea și se returnează un caracter care codifică starea simulării , urmat eventual de cererea clientului de preluare a pozițiilor mașinilor din simulare .</text:p>
+   <text:p text:style-name="P1"><text:tab/>Preluarea pozițiilor simulate ale mașinilor se face printr-o listă a coordonatelor în baza de date ce vor fi afișate pe hartă .</text:p>
+   <text:p text:style-name="P1"><text:tab/>Pentru afișarea imaginii randate a hărții în client <text:s/>se folosește mapserver ca un server separat de serverul apache , care este intermediarul cererilor de modificare a coordonatelor pentru care se randează imaginea curentă a hărții și returnează imaginea rezultată către client .</text:p>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P11"><text:s text:c="24"/>Modificare coordonate hartă</text:p>
+   <text:p text:style-name="P11"><text:s text:c="12"/>+-------+ <text:s text:c="2"/>+-----------------+</text:p>
+   <text:p text:style-name="P11"><text:s text:c="12"/>v <text:s text:c="6"/>+ <text:s text:c="2"/>v</text:p>
+   <text:p text:style-name="P11">+----------------+ +---------+</text:p>
+   <text:p text:style-name="P11">|Baza de date osm| |Mapserver|</text:p>
+   <text:p text:style-name="P11">+----------------+ +---------+</text:p>
+   <text:p text:style-name="P11"><text:s text:c="12"/>+ <text:s text:c="6"/>^ <text:s text:c="2"/>+</text:p>
+   <text:p text:style-name="P11"><text:s text:c="12"/>+-------+ <text:s text:c="2"/>+-----------------&gt;</text:p>
+   <text:p text:style-name="P11"><text:s text:c="24"/>Imaginea de afișat la noile coordonate</text:p>
+   <text:p text:style-name="P11"/>
+   <text:p text:style-name="P11">+---------------------------------------+ <text:s text:c="2"/>Adăugare mașină interogări directe</text:p>
+   <text:p text:style-name="P11">| <text:s text:c="38"/>|&lt;------------------------------------+</text:p>
+   <text:p text:style-name="P11">| <text:s text:c="38"/>| <text:s text:c="2"/>car_to_simulation_from_2_points.php</text:p>
+   <text:p text:style-name="P11">| <text:s text:c="38"/>| <text:s text:c="2"/>tabelele car_paths , car_pos</text:p>
+   <text:p text:style-name="P11">| <text:s text:c="38"/>|</text:p>
+   <text:p text:style-name="P11">| <text:s text:c="38"/>| <text:s/>Avansarea simulării funcție pl/pgsql</text:p>
+   <text:p text:style-name="P11">|Baza de date pgrouting/simulare trafic |&lt;------------------------------------+</text:p>
+   <text:p text:style-name="P11">| <text:s text:c="38"/>| <text:s/>advance_sim.php</text:p>
+   <text:p text:style-name="P11">| <text:s text:c="38"/>| <text:s/>tabele car_paths,car_pos</text:p>
+   <text:p text:style-name="P11">| <text:s text:c="38"/>|</text:p>
+   <text:p text:style-name="P11">| <text:s text:c="38"/>| Interogarea pozițiilor simulate ale mașinilor</text:p>
+   <text:p text:style-name="P11">| <text:s text:c="38"/>|+-------------------------------------------&gt;</text:p>
+   <text:p text:style-name="P11">| <text:s text:c="38"/>| query_cars_in_sim.php</text:p>
+   <text:p text:style-name="P11">+---------------------------------------+ citire din tabela car_pos</text:p>
+   <text:p text:style-name="P11"><text:tab/><text:tab/>MODULUL BAZĂ DE DATE GEOSPAȚIALĂ</text:p>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P1"><text:tab/></text:p>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P1"><text:soft-page-break/><text:tab/>Modulul bază de date geospațială reține datele necesare pentru randarea hărții respectiv pentru poziționarea mașinilor simulate pe hartă . Cele două baze de date sunt create de unelte de import ale datelor geospațiale openstreetmap în postgis , unelte de import care sunt specifice pentru mapserver , respectiv pgrouting . Baza de date pentru mapserver este folosită pentru randarea hărții în momentul interogării din partea clientului . Baza de date pentru pgrouting care inițial permitea interogarea unei rute și afișarea rutei în client am extins-o pentru a implementa simularea și interogarea pozițiilor mașinilor în trafic .</text:p>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P1"><text:tab/>V Concluzii</text:p>
+   <text:p text:style-name="P1"><text:tab/>Proiectul pe care l-am realizat permite simularea traficului într-un set de date provenind de la proiectul colaborativ openstreetmap . Se pot inroduce mașini în simulare iar avansarea simulării este vizibilă pe hartă prin modificarea pozițiilor unor marker-e ale fiecărei mașini în parte .</text:p>
+   <text:p text:style-name="P1"/>
+   <text:p text:style-name="P1"><text:tab/>VI Bibliografie</text:p>
+   <text:p text:style-name="P1"><text:tab/>http://postgis.refractions.net/</text:p>
+   <text:p text:style-name="P1"><text:tab/>http://en.wikipedia.org/wiki/Simple_Features</text:p>
+   <text:p text:style-name="P1"><text:tab/>http://wiki.openstreetmap.org/wiki/OSM_XML</text:p>
+   <text:p text:style-name="P1"><text:tab/>http://mapserver.org/</text:p>
+   <text:p text:style-name="P1"><text:tab/>http://en.wikipedia.org/wiki/Web_Map_Service</text:p>
+   <text:p text:style-name="P1"><text:tab/>http://openlayers.org/</text:p>
+   <text:p text:style-name="P1"><text:tab/>http://www.pgrouting.org/</text:p>
+  </office:text>
+ </office:body>
+</office:document>

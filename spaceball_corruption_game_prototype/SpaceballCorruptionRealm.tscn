@@ -1,0 +1,104 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://DrawCircleSimpleScript.gd" type="Script" id=1]
+[ext_resource path="res://FPSLabel.gd" type="Script" id=2]
+[ext_resource path="res://RealmsBorders.gd" type="Script" id=3]
+[ext_resource path="res://RealmNorthern.gd" type="Script" id=4]
+[ext_resource path="res://RealmWestern.gd" type="Script" id=5]
+[ext_resource path="res://RealmSpaceballIsland.gd" type="Script" id=6]
+[ext_resource path="res://RealmEastern.gd" type="Script" id=7]
+[ext_resource path="res://RealmSouthern.gd" type="Script" id=8]
+[ext_resource path="res://WhatToDoParent.gd" type="Script" id=9]
+[ext_resource path="res://WhatToDoChild.gd" type="Script" id=10]
+[ext_resource path="res://DoItButton.gd" type="Script" id=11]
+[ext_resource path="res://RealmsAbandonedCollisionDetect.gd" type="Script" id=12]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[node name="SpaceballCorruptionRealm" type="Node2D"]
+
+[node name="CommandAndDebugUI" type="VBoxContainer" parent="."]
+margin_right = 103.0
+margin_bottom = 49.0
+
+[node name="FPSLabel" type="Label" parent="CommandAndDebugUI"]
+margin_right = 103.0
+margin_bottom = 31.0
+custom_colors/font_color = Color( 0.121569, 0.945098, 0.00392157, 1 )
+text = "0
+"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DebugLabel" type="Label" parent="CommandAndDebugUI"]
+margin_top = 35.0
+margin_right = 103.0
+margin_bottom = 49.0
+text = "Debug text here"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WhatToDoParent" type="OptionButton" parent="CommandAndDebugUI"]
+margin_top = 53.0
+margin_right = 103.0
+margin_bottom = 73.0
+script = ExtResource( 9 )
+
+[node name="WhatToDoChild" type="OptionButton" parent="CommandAndDebugUI"]
+margin_top = 77.0
+margin_right = 103.0
+margin_bottom = 97.0
+script = ExtResource( 10 )
+
+[node name="DoItButton" type="Button" parent="CommandAndDebugUI"]
+margin_top = 101.0
+margin_right = 103.0
+margin_bottom = 121.0
+text = "Do It"
+script = ExtResource( 11 )
+
+[node name="NonPlayerCharacters" type="Node" parent="."]
+
+[node name="NPC" type="KinematicBody2D" parent="NonPlayerCharacters"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NonPlayerCharacters/NPC"]
+shape = SubResource( 1 )
+
+[node name="Realms" type="Node" parent="."]
+
+[node name="TestCollision" type="StaticBody2D" parent="Realms"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Realms/TestCollision"]
+position = Vector2( -209.141, -215.652 )
+scale = Vector2( 1.30215, 2.09029 )
+build_mode = 1
+polygon = PoolVector2Array( 217.857, 161.342, 468.696, 158.91, 473.299, 307.286, 206.351, 297.556 )
+one_way_collision_margin = 15.0
+
+[node name="RealmsBorders" type="StaticBody2D" parent="Realms"]
+script = ExtResource( 3 )
+
+[node name="RealmsAbandonedCollisionDetect" type="Node2D" parent="Realms/RealmsBorders"]
+script = ExtResource( 12 )
+
+[node name="RealmSpaceballIsland" type="Node2D" parent="Realms"]
+script = ExtResource( 6 )
+
+[node name="RealmNorthern" type="Node2D" parent="Realms"]
+script = ExtResource( 4 )
+
+[node name="RealmWestern" type="Node2D" parent="Realms"]
+script = ExtResource( 5 )
+
+[node name="RealmSouthern" type="Node2D" parent="Realms"]
+script = ExtResource( 8 )
+
+[node name="RealmEastern" type="Node2D" parent="Realms"]
+script = ExtResource( 7 )
+
+[connection signal="item_selected" from="CommandAndDebugUI/WhatToDoParent" to="CommandAndDebugUI/WhatToDoParent" method="_on_WhatToDoParent_item_selected"]
+[connection signal="button_up" from="CommandAndDebugUI/DoItButton" to="CommandAndDebugUI/WhatToDoParent" method="_on_DoItButton_button_up"]

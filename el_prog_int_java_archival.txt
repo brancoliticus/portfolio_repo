@@ -1,0 +1,1501 @@
+//////////////////////////////////////////////
+//ADD TWO uint64 vars only with bit operations
+//////////////////////////////////////////////
+
+func add(a,b uint64) uint64 {
+    carry := uint64(0)
+    sum := uint64(0)
+    for index := uint16(0) ; index<64 ; index++ {
+        sum |= (a ^ b ^ carry) & (uint64(1)<<index)
+        
+        a_not_zero := (a & (uint64(1)<<index)) != uint64(0)
+        b_not_zero := (b & (uint64(1)<<index)) != uint64(0)
+        carry_not_zero := (carry & (uint64(1)<<(index+1))) != uint64(0)
+        if (a_not_zero && b_not_zero) ||
+                (a_not_zero && carry_not_zero) ||
+                (b_not_zero && carry_not_zero) {
+            carry = uint64(1) << (index+1)
+        } else {
+            carry = uint64(0)
+        }
+    }
+    return sum
+}
+
+/////////////////////////////////////////////////
+//divide two uint64 vars with only bit operations
+/////////////////////////////////////////////////
+func divide(x,y uint64) uint64 {
+    y_times_power_of_two := y << 32
+    power_of_two := uint64(32)
+    res := uint64(0)
+    for {
+        if x < y {break}
+        if y_times_power_of_two <= x {
+            res += uint64(1) << power_of_two
+            x -= y_times_power_of_two
+        }
+        y_times_power_of_two >>= 1
+        power_of_two -= 1
+    }
+    return res
+}
+
+/////////////////////////////////////////
+//increment an arbitrary precision number
+/////////////////////////////////////////
+
+func increment(number []uint8) []uint8 {
+    var result []uint8
+    carry := true
+    var index int
+    for index = 0 ; index <= len(number) - 1 && carry ; index++ {
+        if number[index] != 9 {
+            result = append(result, number[index] + 1)
+            carry = false
+        } else {
+            result = append(result, uint8(0))
+        }
+    }
+    if !carry {
+        for index2 := index ; index2 <= len(number) - 1 ; index2++ {
+            result = append(result, number[index])
+        }
+    } else {
+        result = append(result, uint8(1))
+    }
+
+    return result
+}
+
+/////////////////////
+//add two big numbers
+/////////////////////
+
+func add(a,b []uint8) []uint8 {
+    var result []uint8
+    var min int
+    carry := uint8(0)
+    if len(a) < len(b) {
+        min = len(a)
+        a, b = b, a
+    } else {
+        min = len(b)
+    }
+    for index := 0 ; index < min ; index++ {
+        result = append(result, a[index] + b[index] + carry)
+        if result[index] >= 10 {
+            carry = 1
+            result[index] = result[index] % 10
+        } else {
+            carry = 0
+        }
+    }
+    for index := min ; index <= len(a) ; index++ {
+        if index < len(a) {
+            result = append(result, a[index] + carry)
+        } else {
+            result = append(result, carry)
+        }
+        if result[index] >= 10 {
+            carry = 1
+            result[index] = result[index] % 10
+        } else {
+            carry = 0
+        }
+    }
+    return result
+}
+
+//////////////////////////
+//multiply two big numbers
+//////////////////////////
+
+func multiply(a, b []uint8) []uint8 {
+    var result []uint8
+    var carry uint8
+    result = make([]uint8, len(a) + len(b))
+    for indexa, digita := range a {
+        for indexb, digitb := range b {
+            result[indexa + indexb] += digita * digitb
+            if result[indexa + indexb] >= 10 {
+                carry = result[indexa + indexb] / 10
+                result[indexa + indexb] = result[indexa + indexb] % 10
+            } else {
+                carry = 0
+            }
+            for index := 1 ; carry != 0 ; index++ {
+                result[indexa + indexb + index] += carry
+                if result[indexa + indexb + index] >= 10 {
+                    carry = result[indexa + indexb + index] / 10
+                    result[indexa + indexb + index] = 
+                                                result[indexa + indexb + index] % 10
+                } else {
+                    carry = 0
+                }
+            }
+        }
+    }
+
+    var index int
+    for index = len(a) + len(b) - 1 ; index >= 0 ; index-- {
+        if result[index] != 0 { break }
+    }
+    result = result[0 : index + 1]
+
+    return result
+}
+
+//////////////////////////////////////////////////////////
+//max profit when buying and selling a stock once in a day
+//////////////////////////////////////////////////////////
+
+func stock_prices_max_profit(prices []int32) int32 {
+    min_stock_price_till_now := int32(math.MaxInt32)
+    max_profit := int32(math.MinInt32)
+    for _, price := range prices {
+        if max_profit < price - min_stock_price_till_now {
+            max_profit = price - min_stock_price_till_now
+        }
+        if price < min_stock_price_till_now {
+            min_stock_price_till_now = price
+        }
+    }
+    return max_profit
+}
+
+////////////////////////////////////////////////////////
+//max profit when buying and selling a stock twice a day
+////////////////////////////////////////////////////////
+
+func max_stock_profit_forwards(prices []int) []int{
+    var min_so_far int
+    if len(prices) <= 1 { return nil }
+    if len(prices) == 2 { return []int{prices[1] - prices[0]} }
+    max_profit_forwards := make([]int, len(prices) - 1)
+    max_profit_forwards[0] = prices[1] - prices[0]
+    if prices[1] > prices[0] {
+        min_so_far = prices[0]
+    } else {
+        min_so_far = prices[1]
+    }
+    for index := 2 ; index < len(prices) ; index++ {
+        if min_so_far > prices[index-1] {
+            min_so_far = prices[index-1]
+        }
+        if prices[index] - min_so_far > max_profit_forwards[index-2] {
+            max_profit_forwards[index-1] = prices[index] - min_so_far
+        } else {
+            max_profit_forwards[index-1] = max_profit_forwards[index-2]
+        }
+    }
+    for index, _ := range(max_profit_forwards) {
+        if max_profit_forwards[index] < 0 {
+            max_profit_forwards[index] = 0
+        }
+    }
+    return max_profit_forwards
+}
+
+func max_stock_profit_backwards(prices []int) []int{
+    var max_so_far int
+    if len(prices) <= 1 { return nil }
+    if len(prices) == 2 { return []int{prices[1] - prices[0]} }
+    max_profit_backwards := make([]int, len(prices)-1)
+    max_profit_backwards[len(prices)-2] = prices[len(prices)-1]-prices[len(prices)-2]
+    if prices[len(prices)-2] < prices[len(prices)-1] {
+        max_so_far = prices[len(prices)-1]
+    } else {
+        max_so_far = prices[len(prices)-2]
+    }
+    for index := len(prices) - 3 ; index >= 0 ; index-- {
+        if max_so_far < prices[index + 1] {
+            max_so_far = prices[index + 1]
+        }
+        if max_so_far - prices[index] > max_profit_backwards[index + 1] {
+            max_profit_backwards[index] = max_so_far - prices[index]
+        } else {
+            max_profit_backwards[index] = max_profit_backwards[index + 1]
+        }
+    }
+    for index, _ := range(max_profit_backwards) {
+        if max_profit_backwards[index] < 0 {
+            max_profit_backwards[index] = 0
+        }
+    }
+    return max_profit_backwards
+}
+
+func max_profit_buy_and_sell_twice(prices []int) int{
+    max := 0
+    max_profit_forwards := max_stock_profit_forwards(prices)
+    fmt.Printf("\nMax profit forwards array is %v", max_profit_forwards)
+    max_profit_backwards := max_stock_profit_backwards(prices)
+    fmt.Printf("\nMax profit backwards array is %v", max_profit_backwards)
+    for index := 1 ; index < len(max_profit_backwards) ; index++ {
+        if max < max_profit_forwards[index-1] + max_profit_backwards[index] {
+            max = max_profit_forwards[index-1] + max_profit_backwards[index]
+        }
+    }
+    return max
+}
+
+///////////////////
+//print primes to n
+///////////////////
+
+package main
+
+import (
+    "fmt"
+)
+
+/* 
+0 bit means prime
+1 bit means non-prime
+*/
+type primes_array struct {
+    the_sieving_array []uint64
+    max_number_to_check int64
+}
+
+func initialise_to_max_index(max_index int64) primes_array {
+    var pa primes_array
+    pa.max_number_to_check = max_index
+    pa.the_sieving_array = make([]uint64, max_index/(64*2) + 1)
+    return pa
+}
+
+func (pa primes_array) is_prime_at_odd_index_mark_multiples(index int64) bool {
+    if index == 7 {
+        fmt.Printf("Sieving array at 7: %v\n", pa.the_sieving_array)
+    }
+    if (pa.the_sieving_array[index/(64*2)] >> (index%(64*2)/2)) & 1 == 1 {
+        if index == 7 { fmt.Printf("7 is not prime.\n") }
+        return false
+    }
+    if index == 7 { fmt.Printf("7 is prime.\n") }
+    pa.mark_multiples(index)
+    return true
+}
+
+func (pa primes_array) mark_multiples(index int64) {
+    var i int64
+    for i=3 ; ; i=i+2 {
+        if index*i > pa.max_number_to_check { break }
+        pa.mark_as_multiple_at_odd_index(index*i)
+    }
+}
+
+func (pa primes_array) mark_as_multiple_at_odd_index(index int64) {
+    pa.the_sieving_array[index/(64*2)] |= 1<<(index%(64*2)/2)
+}
+
+func enumerate_primes_to_n(n int64) []int64 {
+    var pa primes_array
+    var i int64
+    if n < 2 { return nil}
+    primes_list := []int64{2}
+    pa=initialise_to_max_index(n)
+    for i=3 ; i<=n ; i+=2 {
+        if pa.is_prime_at_odd_index_mark_multiples(i) {
+            primes_list=append(primes_list,i)
+        }
+    }
+    return primes_list
+}
+
+func main() {
+    fmt.Println("Hello, playground")
+    fmt.Printf("Primes list for %d is %v", 1000, enumerate_primes_to_n(1000))
+}
+
+///////////////
+//permute array
+///////////////
+
+func permute_slice_additional_space(
+        slice_to_permute, permutation_slice []int64) []int64 {
+
+    result_slice := make([]int64, len(slice_to_permute))
+    for index, element := range permutation_slice {
+        result_slice[element] = slice_to_permute[index]
+    }
+
+    return result_slice
+}
+
+func permute_slice_no_additional_space(
+        slice_to_permute, permutation_slice []int64) []int64 {
+
+    var pad1, pad2 int64
+    var pad3 int
+    elem_count := int64(len(permutation_slice))
+    for index, _ := range permutation_slice {
+        if permutation_slice[index] < 0 { continue }
+
+        cyclic_perm_loop_index := index
+        pad1 = slice_to_permute[cyclic_perm_loop_index]
+        for {
+            if permutation_slice[cyclic_perm_loop_index] < 0 { break }
+
+            pad2 = slice_to_permute[permutation_slice[cyclic_perm_loop_index]]
+            slice_to_permute[permutation_slice[cyclic_perm_loop_index]] = pad1
+            pad1 = pad2
+
+            pad3 = cyclic_perm_loop_index
+            cyclic_perm_loop_index = int(permutation_slice[cyclic_perm_loop_index])
+            permutation_slice[pad3] -= elem_count
+        }
+    }
+
+    for index, _ := range permutation_slice {
+        permutation_slice[index] += elem_count
+    }
+
+    return slice_to_permute
+}
+
+/////////////////////////////////////////////
+//return next permutation in dictionary order
+/////////////////////////////////////////////
+
+func next_slice_in_dictionary_order(the_slice []int64) []int64 {
+    if the_slice == nil { return nil }
+    if len(the_slice) == 1 { return nil }
+
+    slice_len := len(the_slice)
+    first_increasing := slice_len - 1
+    for {
+        if first_increasing == 0 { break }
+        if the_slice[first_increasing-1] < the_slice[first_increasing] { break }
+        first_increasing -= 1
+    }
+    if first_increasing == 0 { return nil }
+    first_increasing -= 1
+
+    lesser_than_first_increasing := first_increasing + 1
+    for {
+        if lesser_than_first_increasing == slice_len { break }
+        if the_slice[lesser_than_first_increasing] < the_slice[first_increasing] {break}
+        lesser_than_first_increasing += 1
+    }
+
+    the_slice[first_increasing], the_slice[lesser_than_first_increasing-1] =
+        the_slice[lesser_than_first_increasing-1], the_slice[first_increasing]
+
+    right_hand_margin := slice_len - 1
+    left_hand_margin := first_increasing + 1
+    for{
+        if left_hand_margin >= right_hand_margin { break }
+        the_slice[left_hand_margin], the_slice[right_hand_margin] =
+            the_slice[right_hand_margin], the_slice[left_hand_margin]
+        left_hand_margin += 1
+        right_hand_margin -= 1
+    }
+
+    return the_slice
+}
+
+/////////////////////////////////////////////////////
+//choose uniformly count elements from set
+//return in the first count elements of the input set
+/////////////////////////////////////////////////////
+
+func choose_count_from_slice(count int64, slice []int64) {
+    if count <= 0 { return }
+    if int64(len(slice)) <= 1 { return }
+    if count >= int64(len(slice)) { return }
+
+    len_slice := int64(len(slice))
+    chosen_index := int64(0)
+    var i int64
+    for i = 0 ; i < count ; i++ {
+        chosen_index = rand.Int63n(len_slice - i) + i
+        slice[i], slice[chosen_index] = slice[chosen_index], slice[i]
+    }
+}
+
+//////////////////////////////////////////////////////
+//choose uniformly k elements from unbounded input set
+//////////////////////////////////////////////////////
+
+type uniform_selection_of_k_items struct {
+    k int64
+    item_count_so_far int64
+    the_slice []int64
+}
+
+func (selector *uniform_selection_of_k_items ) initialize(k int64) {
+    selector.k = k
+    selector.item_count_so_far = 0
+    selector.the_slice = nil
+}
+
+func (selector *uniform_selection_of_k_items) select_item(the_new_item int64) {
+   selector.item_count_so_far++
+   if selector.item_count_so_far <= selector.k {
+       selector.the_slice = append(selector.the_slice, the_new_item)
+   } else {
+        normalized_random := rand.Float64() 
+        if float64(selector.k)/float64(selector.item_count_so_far) < normalized_random{
+            item_to_replace := rand.Int63n(selector.k)
+            selector.the_slice[item_to_replace] = the_new_item
+        }
+   }
+}
+
+///////////////////////////////////////////////////////////
+//select k elements from n optimized for k much less than n
+///////////////////////////////////////////////////////////
+
+func k_from_n_with_k_much_less_than_n(k, n int64) []int64 {
+    location_for_select := int64(0)
+    var selected_index int64
+    var scratch_pad_1 int64
+    var scratch_pad_2 int64
+    var ok bool
+    result_mapping := make(map[int64]int64)
+    var result_slice []int64
+
+    for {
+        if location_for_select == k { break }
+        selected_index = rand.Int63n(n - location_for_select) + location_for_select
+        if _, ok = result_mapping[selected_index] ; ok {
+            scratch_pad_1 = result_mapping[selected_index]
+        } else {
+            scratch_pad_1 = selected_index
+        }
+        if _, ok = result_mapping[location_for_select] ; ok {
+            scratch_pad_2 = result_mapping[location_for_select]
+        } else {
+            scratch_pad_2 = location_for_select
+        }
+        result_mapping[selected_index] = scratch_pad_2
+        result_mapping[location_for_select] = scratch_pad_1
+        location_for_select++
+    }
+
+    selected_index = 0
+    for {
+        if selected_index == k { break }
+        result_slice = append(result_slice, result_mapping[selected_index])
+        selected_index++
+    }
+
+    return result_slice
+}
+
+func test_for_k_n(k, n int64) {
+    count := 0
+    status_slice := make([]int64, n)
+    var elem int64
+    var index int
+    current_result_slice := make([]int64, k)
+
+    for {
+        if count == 100000 {  break }
+        current_result_slice = k_from_n_with_k_much_less_than_n(k, n)
+        for _, elem = range current_result_slice {
+            status_slice[elem]++
+        }
+        count++
+    }
+    for index, elem = range status_slice {
+        fmt.Printf("Count for %v is %v\n", index, elem)
+    }
+}
+
+//////////////////////////////////////////
+//choose nonuniformly items according to a
+//probabilities array that adds to 1.0
+//////////////////////////////////////////
+
+package main
+
+import (
+    "fmt"
+    "math/rand"
+)
+
+type work_slice struct {
+    number int64
+    probability float64
+    binary_search_bracketing float64
+}
+
+func preprocess_binary_search_bracketing(probabilities_slice []work_slice) {
+    var index int64
+    if len(probabilities_slice) == 0 { return }
+    probabilities_slice[0].binary_search_bracketing =
+        probabilities_slice[0].probability
+    index = 1
+    for {
+        if index == int64(len(probabilities_slice)) { break }
+        probabilities_slice[index].binary_search_bracketing =
+            probabilities_slice[index-1].binary_search_bracketing +
+            probabilities_slice[index].probability
+        index++
+    }
+    probabilities_slice[index-1].binary_search_bracketing = 1.0
+}
+
+func choose_one_item_from_slice(probabilities_slice []work_slice) int64 {
+    if len(probabilities_slice) == 0 { return 0 }
+    if len(probabilities_slice) == 1 { return probabilities_slice[0].number }
+    chooser_value := rand.Float64()
+    var item_to_check int64
+    left_side := int64(0)
+    right_side := int64(len(probabilities_slice)) - 1
+
+    for {
+        if right_side - left_side == 1 { break }
+        item_to_check = (right_side+left_side) / 2
+        if probabilities_slice[item_to_check].binary_search_bracketing < chooser_value {
+            left_side = item_to_check
+        } else if probabilities_slice[item_to_check-1].binary_search_bracketing >=
+                    chooser_value {
+            right_side = item_to_check
+        } else {
+            break
+        }
+    }
+
+    if probabilities_slice[left_side].binary_search_bracketing > chooser_value {
+        return probabilities_slice[left_side].number
+    }
+    if probabilities_slice[right_side-1].binary_search_bracketing <= chooser_value {
+        return probabilities_slice[right_side].number
+    }
+    return probabilities_slice[item_to_check].number
+}
+
+func test_nonuniform_probabilities(probabilities_test_slice []work_slice) {
+    preprocess_binary_search_bracketing(probabilities_test_slice)
+    i := int64(0)
+    var chosen_value int64
+    var val int64
+    var key int64
+    counting_map := make(map[int64]int64)
+    for i, _ := range probabilities_test_slice {
+        counting_map[probabilities_test_slice[i].number] = 0
+    }
+    i = 0
+    end := int64(100000) //hundred thousand
+    for {
+        if i == end { break }
+        chosen_value = choose_one_item_from_slice(probabilities_test_slice)
+        counting_map[chosen_value]++
+        i++
+    }
+    for key, val = range counting_map {
+        fmt.Printf("%v chosen %v times\n", key, val)
+    }
+    fmt.Printf("%v", counting_map)
+}
+
+func main() {
+    probabilities_test_slice := []work_slice{
+        {3, 0.5, 0.0},
+        {5, 0.333333, 0.0},
+        {7, 0.111111, 0.0},
+        {11, 0.0555555, 0.0},
+    }
+
+    test_nonuniform_probabilities(probabilities_test_slice)
+}
+
+////////////////////////////
+//sudoku constraints checker
+////////////////////////////
+
+package main
+
+import (
+    "fmt"
+)
+
+func check_sudoku_constraints(sudoku_candidate [9][9]int32 ) bool {
+    var i, j, i1, j1 int32 
+    var row_checker, column_checker, square_checker uint32 
+    deltas := []int32 {0, 3, 6} 
+    i=0
+    for {
+        if i == 9 { break }
+        j=0
+        column_checker = 0
+        row_checker = 0
+        for {
+            if j == 9 { break }
+
+            if sudoku_candidate[i][j] != 0 {
+                if (row_checker >> sudoku_candidate[i][j]) & 1 == 0 {
+                    row_checker |= 1 << sudoku_candidate[i][j]
+                } else {
+                    return false
+                }
+            }
+            if sudoku_candidate[j][i] != 0 {
+                if (column_checker >> sudoku_candidate[j][i]) & 1 == 0 {
+                    column_checker |= 1 << sudoku_candidate[j][i]
+                } else {
+                    return false
+                }
+            }
+
+            j++
+        }
+        i++
+    }
+
+    i1=0
+    for {
+        if i1 == 3 { break }
+        j1=0
+        for {
+            if j1 == 3 { break }
+            i=0
+            square_checker = 0
+            for{
+                if i == 3 { break }
+                j=0
+                for {
+                    if j == 3 { break }
+                    if sudoku_candidate[deltas[i1]+i][deltas[j1]+j] != 0 {
+                        if (square_checker >> sudoku_candidate[deltas[i1]+i][deltas[j1]+j]) & 1 == 0 {
+                            square_checker |= 1 << sudoku_candidate[deltas[i1]+i][deltas[j1]+j]
+                        } else {
+                            return false
+                        }
+                    }
+                    j++
+                }
+                i++
+            }
+            j1++
+        }
+        i1++
+    }
+    return true
+}
+
+func test_sudoku_constraint_checker(sudoku_candidate [9][9]int32, truth_value bool ){
+    if check_sudoku_constraints(sudoku_candidate) == truth_value {
+        fmt.Printf("Test succeeded\n")
+    } else {
+        fmt.Printf("Test failed\n")
+    }
+}
+
+func main() {
+    test_sudoku_constraint_checker([9][9]int32{
+        {1, 0, 0, 0, 0, 0, 0, 0, 0},
+        {2, 4, 0, 0, 0, 0, 0, 0 ,7},
+        {3, 0, 0 ,0 ,0 ,0 ,0 ,0 ,0},
+        {4, 0, 0, 0, 0, 0, 0, 0, 0},
+        {5, 0, 0 ,0 ,0 ,0 ,0 ,0 ,0},
+        {6, 0, 0 ,0 ,0 ,0 ,0 ,0 ,0},
+        {7, 0, 0, 0, 0, 0, 1, 0, 0},
+        {8, 0, 0, 0, 0, 0, 0, 2, 0},
+        {9, 0, 0, 0, 0, 0, 4, 0, 3},
+    },true)
+}
+
+///////////////////////////////////
+//PRINT SPIRAL ORDERING OF 2D ARRAY
+///////////////////////////////////
+
+package main
+
+import (
+    "fmt"
+)
+
+var RIGHT_CUTOFF uint
+var BOTTOM_CUTOFF uint
+var LEFT_CUTOFF uint
+var TOP_CUTOFF uint
+
+func initialize_slice_for_spiral_ordering(n uint) [][]uint {
+    var spiral_ordering_slice [][]uint
+    k := uint(0)
+    spiral_ordering_slice = make([][]uint, n)
+    for i := uint(0) ; i < n ; i++ {
+        one_dim_slice := make([]uint, n)
+        for j := uint(0) ; j < n ; j++ {
+            k++
+            one_dim_slice[j] = k
+        }
+        spiral_ordering_slice[i] = one_dim_slice
+    }
+
+    return spiral_ordering_slice
+}
+
+func spiral_ordering_crossing(spiral_ordering_slice [][]uint, n uint) []uint {
+    initialize_cutoffs(n)
+    var spiral_ordering_result []uint
+    var i uint
+
+    spiral_ordering_result = make([]uint, n*n)
+
+    spiral_ordering_results_index := uint(0)
+
+    for{
+        if LEFT_CUTOFF >= RIGHT_CUTOFF { return spiral_ordering_result }
+        for i = LEFT_CUTOFF ; i < RIGHT_CUTOFF ; i++ {
+            spiral_ordering_result[spiral_ordering_results_index] =
+                spiral_ordering_slice[TOP_CUTOFF][i]
+            spiral_ordering_results_index++
+        }
+        TOP_CUTOFF++
+
+        if TOP_CUTOFF >= BOTTOM_CUTOFF { return spiral_ordering_result }
+        for i = TOP_CUTOFF ; i < BOTTOM_CUTOFF ; i++ {
+            spiral_ordering_result[spiral_ordering_results_index] =
+                spiral_ordering_slice[i][RIGHT_CUTOFF - 1]
+            spiral_ordering_results_index++
+        }
+        RIGHT_CUTOFF--
+
+        if LEFT_CUTOFF >= RIGHT_CUTOFF { return spiral_ordering_result }
+        for i = RIGHT_CUTOFF - 1 ; i >= LEFT_CUTOFF ; i-- {
+
+            fmt.Printf("\ni %v BOTTOM_CUTOFF-1 %v", i, BOTTOM_CUTOFF-1)
+
+            spiral_ordering_result[spiral_ordering_results_index] =
+                spiral_ordering_slice[BOTTOM_CUTOFF - 1][i]
+            spiral_ordering_results_index++
+
+            if i == LEFT_CUTOFF { break }
+        }
+        BOTTOM_CUTOFF--
+
+        if TOP_CUTOFF >= BOTTOM_CUTOFF { return spiral_ordering_result }
+        for i = BOTTOM_CUTOFF - 1 ; i >= TOP_CUTOFF ; i-- {
+            spiral_ordering_result[spiral_ordering_results_index] =
+                spiral_ordering_slice[i][LEFT_CUTOFF]
+            spiral_ordering_results_index++
+
+            if i == TOP_CUTOFF { break }
+        }
+        LEFT_CUTOFF++
+    }
+}
+
+func initialize_cutoffs(n uint) {
+    RIGHT_CUTOFF = n
+    BOTTOM_CUTOFF = n
+    LEFT_CUTOFF = uint(0)
+    TOP_CUTOFF = uint(0)
+}
+
+func print_spiral_ordering(spiral_ordering_result []uint){
+    fmt.Printf("\n")
+    for _, elem := range(spiral_ordering_result) {
+        fmt.Printf(" %v", elem)
+    }
+}
+
+func main() {
+
+    initialize_cutoffs(uint(3))
+    spiral_ordering_slice := initialize_slice_for_spiral_ordering(uint(3))
+    spiral_ordering_result := spiral_ordering_crossing(spiral_ordering_slice, uint(3))
+    print_spiral_ordering(spiral_ordering_result)
+
+    initialize_cutoffs(uint(4))
+    spiral_ordering_slice = initialize_slice_for_spiral_ordering(uint(4))
+    spiral_ordering_result = spiral_ordering_crossing(spiral_ordering_slice, uint(4))
+    print_spiral_ordering(spiral_ordering_result)
+}
+
+///////////////////////////////
+//ROTATE SQUARE SLICE CLOCKWISE
+///////////////////////////////
+
+package main
+
+import (
+    "fmt"
+)
+
+func rotate_square_slice_clockwise(input_slice [][]int, size int) [][]int {
+    var output_slice [][]int
+
+    output_slice = make([][]int, size)
+    for k := 0 ; k < size ; k++ {
+        output_slice[k] = make([]int, size)
+    }
+    for i_in, j_out := 0, size-1 ; i_in < size ; i_in, j_out = i_in+1, j_out-1 {
+        for j_in, i_out := 0, 0 ; j_in < size ; j_in, i_out = j_in+1, i_out+1 {
+            output_slice[i_out][j_out] = input_slice[i_in][j_in]
+        }
+    }
+
+    return output_slice
+}
+
+func main() {
+    var input_slice_33, input_slice_44 [][]int
+    var output_slice_33, output_slice_44 [][]int
+    input_slice_33=[][]int{
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9},
+    }
+    input_slice_44=[][]int{
+        {1, 2, 3, 4},
+        {5, 6, 7, 8},
+        {9, 10, 11, 12},
+        {13, 14, 15, 16},
+    }
+
+    output_slice_33 = rotate_square_slice_clockwise(input_slice_33, 3)
+    fmt.Printf("\n %v", output_slice_33)
+
+    output_slice_44 = rotate_square_slice_clockwise(input_slice_44, 4)
+    fmt.Printf("\n %v", output_slice_44)
+}
+
+///////////////////////
+//rotate slice in place
+///////////////////////
+
+package main
+
+import (
+    "fmt"
+)
+
+func rotate_90_degrees_in_place(size int32, slice [][]int32) {
+
+    var upp_limit int32
+    var down_limit int32
+    var left_limit int32
+    var right_limit int32
+
+    var left_to_right int32
+    var up_to_down int32
+    var right_to_left int32
+    var down_to_up int32
+
+    var temp1 int32
+    var temp2 int32
+    var temp3 int32
+    var temp4 int32
+
+    upp_limit = 0
+    down_limit = size - 1
+    left_limit = 0
+    right_limit = size - 1
+
+    for {
+
+        left_to_right = left_limit
+        up_to_down = upp_limit
+        right_to_left = right_limit
+        down_to_up = down_limit
+
+        for {
+            temp1 = slice[upp_limit][left_to_right]
+            temp2 = slice[up_to_down][right_limit]
+            temp3 = slice[down_limit][right_to_left]
+            temp4 = slice[down_to_up][left_limit]
+
+            slice[upp_limit][left_to_right] = temp4
+            slice[up_to_down][right_limit] = temp1
+            slice[down_limit][right_to_left] = temp2
+            slice[down_to_up][left_limit] = temp3
+
+            left_to_right++
+            up_to_down++
+            right_to_left--
+            down_to_up--
+
+            if left_to_right == right_limit { break }
+        }
+
+        left_limit++
+        upp_limit++
+        right_limit--
+        down_limit--
+
+        if left_limit >= right_limit { break }
+    }
+
+}
+
+func main() {
+    slice := [][]int32{
+        {1, 2},
+        {3, 4},
+    }
+    fmt.Printf("%v\n", slice)
+    rotate_90_degrees_in_place(2, slice)
+    fmt.Printf("%v\n", slice)
+
+    slice = [][]int32{
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9},
+    }
+    fmt.Printf("%v\n", slice)
+    rotate_90_degrees_in_place(3, slice)
+    fmt.Printf("%v\n", slice)
+
+    slice = [][]int32{
+        {1, 2, 3, 4},
+        {5, 6, 7, 8},
+        {9, 10, 11, 12},
+        {13, 14, 15, 16},
+    }
+    fmt.Printf("%v\n", slice)
+    rotate_90_degrees_in_place(4, slice)
+    fmt.Printf("%v\n", slice)
+}
+
+////////////////////////////////////////
+//COMPUTE THE SLICE OF PASCAL'S TRIANGLE
+////////////////////////////////////////
+
+package main
+
+import (
+    "fmt"
+)
+
+func pascals_triangle_slice(size int64) [][]int64 {
+    return_slice := make([][]int64, size)
+    for index := int64(0) ; index < size ; index++ {
+        return_slice[index] = make([]int64, index+1)
+    }
+
+    for index_row := int64(0) ; index_row < size ; index_row++ {
+        return_slice[index_row][0] = 1
+        return_slice[index_row][index_row] = 1
+        for index_column := int64(1) ; index_column < index_row ; index_column++  {
+            return_slice[index_row][index_column] =
+                return_slice[index_row-1][index_column-1] +
+                return_slice[index_row-1][index_column]
+        }
+    }
+    return return_slice
+}
+
+func main() {
+    fmt.Println("Hello, playground")
+    fmt.Printf("\n%v", pascals_triangle_slice(0))
+    fmt.Printf("\n%v", pascals_triangle_slice(1))
+    fmt.Printf("\n%v", pascals_triangle_slice(2))
+    fmt.Printf("\n%v", pascals_triangle_slice(3))
+    fmt.Printf("\n%v", pascals_triangle_slice(4))
+    fmt.Printf("\n%v", pascals_triangle_slice(5))
+    fmt.Printf("\n%v", pascals_triangle_slice(6))
+    fmt.Printf("\n%v", pascals_triangle_slice(7))
+}
+
+//////////////////////////////////////////////////////////////////
+//DO STRING TO INTEGER AND INTEGER TO STRING FROM FIRST PRINCIPLES
+//////////////////////////////////////////////////////////////////
+
+use std::collections::HashMap;
+use std::fmt;
+use std::convert::TryFrom;
+
+enum FigureAndMinusInNumber {
+    ZERO,
+    ONE,
+    TWO,
+    THREE,
+    FOUR,
+    FIVE,
+    SIX,
+    SEVEN,
+    EIGHT,
+    NINE,
+    MINUS,
+}
+
+
+#[derive(Debug)]
+enum ParseStringToi64Errors {
+    InteriorMinusError,
+    FrontZeroError,
+    MinusOnlyError,
+    FrontMinusThenZeroError,
+    EmptyStringError,
+    IllegalIntegerCharacterError,
+    I64OverflowError,
+}
+
+impl fmt::Display for ParseStringToi64Errors {
+    fn fmt (&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            ParseStringToi64Errors::InteriorMinusError => 
+                write!(f, "\nMinus character inside number"),
+            ParseStringToi64Errors::FrontZeroError =>
+                write!(f, "\nOnly number 0 can start with the figure 0"),
+            ParseStringToi64Errors::FrontMinusThenZeroError =>
+                write!(f, "\nMinus followed by 0 not allowed"),
+            ParseStringToi64Errors::EmptyStringError =>
+                write!(f, "\nEmpty string error"),
+            ParseStringToi64Errors::IllegalIntegerCharacterError =>
+                write!(f, "\nIllegal character in the supposed integer string"),
+            ParseStringToi64Errors::I64OverflowError =>
+                write!(f, "\nInteger overflow when trying to convert the string"),
+            ParseStringToi64Errors::MinusOnlyError =>
+                write!(f, "\nOnly minus in string"),
+        }
+    }
+}
+
+fn build_map_for_parsing_string_to_i64() -> HashMap<u8, FigureAndMinusInNumber> {
+    let mut map_for_parsing_string_to_i64 
+            : HashMap<u8, FigureAndMinusInNumber> = HashMap::new();
+    for string_byte in "0".bytes() {
+        map_for_parsing_string_to_i64.insert(string_byte, FigureAndMinusInNumber::ZERO);
+        break;
+    }
+    for string_byte in "1".bytes() {
+        map_for_parsing_string_to_i64.insert(string_byte, FigureAndMinusInNumber::ONE);
+        break;
+    }
+    for string_byte in "2".bytes() {
+        map_for_parsing_string_to_i64.insert(string_byte, FigureAndMinusInNumber::TWO);
+        break;
+    }
+    for string_byte in "3".bytes() {
+        map_for_parsing_string_to_i64.insert(string_byte, FigureAndMinusInNumber::THREE);
+        break;
+    }
+    for string_byte in "4".bytes() {
+        map_for_parsing_string_to_i64.insert(string_byte, FigureAndMinusInNumber::FOUR);
+        break;
+    }
+    for string_byte in "5".bytes() {
+        map_for_parsing_string_to_i64.insert(string_byte, FigureAndMinusInNumber::FIVE);
+        break;
+    }
+    for string_byte in "6".bytes() {
+        map_for_parsing_string_to_i64.insert(string_byte, FigureAndMinusInNumber::SIX);
+        break;
+    }
+    for string_byte in "7".bytes() {
+        map_for_parsing_string_to_i64.insert(string_byte, FigureAndMinusInNumber::SEVEN);
+        break;
+    }
+    for string_byte in "8".bytes() {
+        map_for_parsing_string_to_i64.insert(string_byte, FigureAndMinusInNumber::EIGHT);
+        break;
+    }
+    for string_byte in "9".bytes() {
+        map_for_parsing_string_to_i64.insert(string_byte, FigureAndMinusInNumber::NINE);
+        break;
+    }
+    for string_byte in "-".bytes() {
+        map_for_parsing_string_to_i64.insert(string_byte, FigureAndMinusInNumber::MINUS);
+        break;
+    }
+
+    map_for_parsing_string_to_i64
+}
+
+fn string_to_i64_or_error(
+        the_string: &String,
+        map_for_parsing_string_to_i64: &HashMap<u8, FigureAndMinusInNumber>)
+    -> Result<i64, ParseStringToi64Errors> {
+
+    let mut the_i64_result: i64;
+    let mut interior_minus_error: bool;
+    let mut front_zero_error: bool;
+    let mut front_minus_then_zero_error: bool;
+    let mut illegal_character_error: bool;
+    let mut found_front_zero_flag: bool;
+    let mut found_front_minus_flag: bool;
+    let mut is_first_symbol: bool;
+    let mut is_second_symbol: bool;
+    let mut stack_for_parsing_string_to_i64: Vec<FigureAndMinusInNumber>;
+    let mut return_ok: bool;
+    let mut is_first_figure: bool;
+    let mut minus_only_error: bool;
+    found_front_minus_flag = false;
+    found_front_zero_flag = false;
+    interior_minus_error = false;
+    front_zero_error = false;
+    front_minus_then_zero_error = false;
+    illegal_character_error = false;
+    is_first_symbol = true;
+    is_second_symbol = false;
+    stack_for_parsing_string_to_i64 = Vec::new();
+    for string_byte in the_string.bytes() {
+        match map_for_parsing_string_to_i64.get(&string_byte) {
+            Some(FigureAndMinusInNumber::ZERO) => {
+                if found_front_zero_flag { front_zero_error = true; break;  }
+                if is_first_symbol { found_front_zero_flag = true; }
+                if is_second_symbol {
+                    if found_front_minus_flag {
+                        front_minus_then_zero_error = true; break;
+                    }
+                }
+                is_second_symbol = false;
+                if is_first_symbol { is_second_symbol = true; }
+                is_first_symbol = false;
+                stack_for_parsing_string_to_i64.push(FigureAndMinusInNumber::ZERO);
+            },
+            Some(FigureAndMinusInNumber::MINUS) => {
+                if !is_first_symbol { interior_minus_error = true; break; }
+                found_front_minus_flag = true;
+                is_second_symbol = false;
+                if is_first_symbol { is_second_symbol = true; }
+                is_first_symbol = false;
+                stack_for_parsing_string_to_i64.push(FigureAndMinusInNumber::MINUS);
+            },
+            Some(FigureAndMinusInNumber::ONE) => {
+                if found_front_zero_flag { front_zero_error = true; break; }
+                is_second_symbol = false;
+                if is_first_symbol { is_second_symbol = true; }
+                is_first_symbol = false;
+                stack_for_parsing_string_to_i64.push(FigureAndMinusInNumber::ONE);
+            },
+            Some(FigureAndMinusInNumber::TWO) => {
+                if found_front_zero_flag { front_zero_error = true; break; }
+                is_second_symbol = false;
+                if is_first_symbol { is_second_symbol = true; }
+                is_first_symbol = false;
+                stack_for_parsing_string_to_i64.push(FigureAndMinusInNumber::TWO);
+            },
+            Some(FigureAndMinusInNumber::THREE) => {
+                if found_front_zero_flag { front_zero_error = true; break; }
+                is_second_symbol = false;
+                if is_first_symbol { is_second_symbol = true; }
+                is_first_symbol = false;
+                stack_for_parsing_string_to_i64.push(FigureAndMinusInNumber::THREE);
+            },
+            Some(FigureAndMinusInNumber::FOUR) => {
+                if found_front_zero_flag { front_zero_error = true; break; }
+                is_second_symbol = false;
+                if is_first_symbol { is_second_symbol = true; }
+                is_first_symbol = false;
+                stack_for_parsing_string_to_i64.push(FigureAndMinusInNumber::FOUR);
+            },
+            Some(FigureAndMinusInNumber::FIVE) => {
+                if found_front_zero_flag { front_zero_error = true; break; }
+                is_second_symbol = false;
+                if is_first_symbol { is_second_symbol = true; }
+                is_first_symbol = false;
+                stack_for_parsing_string_to_i64.push(FigureAndMinusInNumber::FIVE);
+            },
+            Some(FigureAndMinusInNumber::SIX) => {
+                if found_front_zero_flag { front_zero_error = true; break; }
+                is_second_symbol = false;
+                if is_first_symbol { is_second_symbol = true; }
+                is_first_symbol = false;
+                stack_for_parsing_string_to_i64.push(FigureAndMinusInNumber::SIX);
+            },
+            Some(FigureAndMinusInNumber::SEVEN) => {
+                if found_front_zero_flag { front_zero_error = true; break; }
+                is_second_symbol = false;
+                if is_first_symbol { is_second_symbol = true; }
+                is_first_symbol = false;
+                stack_for_parsing_string_to_i64.push(FigureAndMinusInNumber::SEVEN);
+            },
+            Some(FigureAndMinusInNumber::EIGHT) => {
+                if found_front_zero_flag { front_zero_error = true; break; }
+                is_second_symbol = false;
+                if is_first_symbol { is_second_symbol = true; }
+                is_first_symbol = false;
+                stack_for_parsing_string_to_i64.push(FigureAndMinusInNumber::EIGHT);
+            },
+            Some(FigureAndMinusInNumber::NINE) => {
+                if found_front_zero_flag { front_zero_error = true; break; }
+                is_second_symbol = false;
+                if is_first_symbol { is_second_symbol = true; }
+                is_first_symbol = false;
+                stack_for_parsing_string_to_i64.push(FigureAndMinusInNumber::NINE);
+            },
+            None => {
+                is_first_symbol = false;
+                illegal_character_error = true; break; 
+            },
+        } // match map_for_parsing_String_to_i64[string_byte] {
+    } // for string_byte in the_string.bytes() {
+
+    if is_first_symbol { 
+        return Err(ParseStringToi64Errors::EmptyStringError);
+    }
+    if front_zero_error {
+        return Err(ParseStringToi64Errors::FrontZeroError);
+    }
+    if front_minus_then_zero_error {
+        return Err(ParseStringToi64Errors::FrontMinusThenZeroError);
+    }
+    if interior_minus_error {
+        return Err(ParseStringToi64Errors::InteriorMinusError);
+    }
+    if illegal_character_error {
+        return Err(ParseStringToi64Errors::IllegalIntegerCharacterError);
+    }
+
+    the_i64_result = 1;
+    return_ok = true;
+    is_first_figure = true;
+    minus_only_error = false;
+    for figure_or_minus in &stack_for_parsing_string_to_i64 {
+        match figure_or_minus {
+            FigureAndMinusInNumber::MINUS => {
+                if stack_for_parsing_string_to_i64.len() == 1 {
+                    minus_only_error = true; break;
+                }
+                match the_i64_result.overflowing_mul(-1) {
+                    (temp, false) => { the_i64_result = temp; continue; },
+                    _ => { return_ok = false; break; },
+                }
+            },
+            FigureAndMinusInNumber::ZERO => {
+                if is_first_figure { the_i64_result = 0; break; }
+                match the_i64_result.overflowing_mul(10) {
+                    (temp, false) => { the_i64_result = temp; continue; },
+                    _ => { return_ok = false; break; },
+                }
+            },
+            FigureAndMinusInNumber::ONE => {
+                if is_first_figure { 
+                    the_i64_result *= 1;
+                    is_first_figure = false;
+                    continue;
+                }
+                match the_i64_result.overflowing_mul(10) {
+                    (temp, false) => { the_i64_result = temp; },
+                    _ => { return_ok = false; break; },
+                }
+                match the_i64_result.overflowing_add(
+                        if the_i64_result >= 0 {1} else {-1}) {
+                    (temp, false) => { the_i64_result = temp; continue; },
+                    _ => { return_ok = false; break; },
+                }
+            },
+            FigureAndMinusInNumber::TWO => {
+                if is_first_figure { 
+                    the_i64_result *= 2;
+                    is_first_figure = false;
+                    continue;
+                }
+                match the_i64_result.overflowing_mul(10) {
+                    (temp, false) => { the_i64_result = temp; },
+                    _ => { return_ok = false; break; },
+                }
+                match the_i64_result.overflowing_add(
+                        if the_i64_result > 0 {2} else {-2}) {
+                    (temp, false) => { the_i64_result = temp; continue; },
+                    _ => { return_ok = false; break; },
+                }
+            },
+            FigureAndMinusInNumber::THREE => {
+                if is_first_figure { 
+                    the_i64_result *= 3;
+                    is_first_figure = false;
+                    continue;
+                }
+                match the_i64_result.overflowing_mul(10) {
+                    (temp, false) => { the_i64_result = temp; },
+                    _ => { return_ok = false; break; },
+                }
+                match the_i64_result.overflowing_add(
+                        if the_i64_result >= 0 {3} else {-3}) {
+                    (temp, false) => { the_i64_result = temp; continue; },
+                    _ => { return_ok = false; break; },
+                }
+            },
+            FigureAndMinusInNumber::FOUR => {
+                if is_first_figure { 
+                    the_i64_result *= 4;
+                    is_first_figure = false;
+                    continue;
+                }
+                match the_i64_result.overflowing_mul(10) {
+                    (temp, false) => { the_i64_result = temp; },
+                    _ => { return_ok = false; break; },
+                }
+                match the_i64_result.overflowing_add(
+                        if the_i64_result >= 0 {4} else {-4}) {
+                    (temp, false) => { the_i64_result = temp; continue; },
+                    _ => { return_ok = false; break; },
+                }
+            },
+            FigureAndMinusInNumber::FIVE => {
+                if is_first_figure { 
+                    the_i64_result *= 5;
+                    is_first_figure = false;
+                    continue;
+                }
+                match the_i64_result.overflowing_mul(10) {
+                    (temp, false) => { the_i64_result = temp; },
+                    _ => { return_ok = false; break; },
+                }
+                match the_i64_result.overflowing_add(
+                        if the_i64_result >= 0 {5} else {-5}) {
+                    (temp, false) => { the_i64_result = temp; continue; },
+                    _ => { return_ok = false; break; },
+                }
+            },
+            FigureAndMinusInNumber::SIX => {
+                if is_first_figure { 
+                    the_i64_result *= 6;
+                    is_first_figure = false;
+                    continue;
+                }
+                match the_i64_result.overflowing_mul(10) {
+                    (temp, false) => { the_i64_result = temp; },
+                    _ => { return_ok = false; break; },
+                }
+                match the_i64_result.overflowing_add(
+                        if the_i64_result >= 0 {6} else {-6}) {
+                    (temp, false) => { the_i64_result = temp; continue; },
+                    _ => { return_ok = false; break; },
+                }
+            },
+            FigureAndMinusInNumber::SEVEN => {
+                if is_first_figure { 
+                    the_i64_result *= 7;
+                    is_first_figure = false;
+                    continue;
+                }
+                match the_i64_result.overflowing_mul(10) {
+                    (temp, false) => { the_i64_result = temp; },
+                    _ => { return_ok = false; break; },
+                }
+                match the_i64_result.overflowing_add(
+                        if the_i64_result >= 0 {7} else {-7}) {
+                    (temp, false) => { the_i64_result = temp; continue; },
+                    _ => { return_ok = false; break; },
+                }
+            },
+            FigureAndMinusInNumber::EIGHT => {
+                if is_first_figure { 
+                    the_i64_result *= 8;
+                    is_first_figure = false;
+                    continue;
+                }
+                match the_i64_result.overflowing_mul(10) {
+                    (temp, false) => { the_i64_result = temp; },
+                    _ => { return_ok = false; break; },
+                }
+                match the_i64_result.overflowing_add(
+                        if the_i64_result >= 0 {8} else {-8}) {
+                    (temp, false) => { the_i64_result = temp; continue; },
+                    _ => { return_ok = false; break; },
+                }
+            },
+            FigureAndMinusInNumber::NINE => {
+                if is_first_figure { 
+                    the_i64_result *= 9;
+                    is_first_figure = false;
+                    continue;
+                }
+                match the_i64_result.overflowing_mul(10) {
+                    (temp, false) => { the_i64_result = temp; },
+                    _ => { return_ok = false; break; },
+                }
+                match the_i64_result.overflowing_add(
+                        if the_i64_result >= 0 {9} else {-9}) {
+                    (temp, false) => { the_i64_result = temp; continue; },
+                    _ => { return_ok = false ; break ; },
+                }
+            },
+        }
+    } // for figure_or_minus in stack_for_parsing_String_to_i64
+
+    if minus_only_error { return Err(ParseStringToi64Errors::MinusOnlyError); }
+    if return_ok { Ok(the_i64_result) }
+    else { Err(ParseStringToi64Errors::I64OverflowError) }
+} // string_to_i64_or_error
+
+fn parse_string_to_i64(
+    the_string: String,
+    map_for_parsing_string_to_i64: &HashMap<u8, FigureAndMinusInNumber>) {
+
+    let result = string_to_i64_or_error(&the_string,
+                                        map_for_parsing_string_to_i64);
+    match result {
+        Ok(the_i64_result) => {
+            println!("The string {} is the number {}", the_string, the_i64_result);
+        },
+        Err(error) => {
+            println!("The string {} gave the error {}", the_string, error);
+        },
+    }
+}
+
+fn parse_i64_to_string(the_i64_input: i64) -> String{
+    let mut the_string_result: String;
+    let is_negative_flag: bool;
+    let mut an_i64_interm_var: i64;
+    let mut reversing_stack: Vec<i8>;
+    an_i64_interm_var = the_i64_input;
+    if an_i64_interm_var < 0 { is_negative_flag = true; an_i64_interm_var *= -1; }
+    else { is_negative_flag = false; }
+
+    reversing_stack = vec![];
+    loop {
+        if an_i64_interm_var == 0 { break; }
+        reversing_stack.push(i8::try_from(an_i64_interm_var % 10).ok().unwrap());
+        an_i64_interm_var /= 10;
+    }
+    if is_negative_flag { the_string_result = "-".to_string(); }
+    else { the_string_result = "".to_string(); }
+    if reversing_stack.len() == 0 { return "0".to_string(); }
+    loop {
+        match reversing_stack.pop(){
+        None => break,
+        Some(figure) => the_string_result.push_str(&figure.to_string()),
+        }
+        
+    }
+    return the_string_result;
+}
+
+fn print_i64_to_string_of(the_i64_input: i64){
+    println!("The i64 number {} is the string {}",
+             the_i64_input, parse_i64_to_string(the_i64_input));
+}
+
+fn main() {
+    let map_for_parsing_string_to_i64: HashMap<u8, FigureAndMinusInNumber>;
+    map_for_parsing_string_to_i64 = build_map_for_parsing_string_to_i64();
+
+    parse_string_to_i64("0".to_string(),
+                        &map_for_parsing_string_to_i64);
+    parse_string_to_i64("-0".to_string(),
+                        &map_for_parsing_string_to_i64);
+    parse_string_to_i64("12".to_string(),
+                        &map_for_parsing_string_to_i64);
+    parse_string_to_i64("-12".to_string(),
+                        &map_for_parsing_string_to_i64);
+    parse_string_to_i64("23563267".to_string(),
+                        &map_for_parsing_string_to_i64);
+    parse_string_to_i64("-325425".to_string(),
+                        &map_for_parsing_string_to_i64);
+
+    parse_string_to_i64("aa".to_string(),
+                        &map_for_parsing_string_to_i64);
+    parse_string_to_i64("-0-0".to_string(),
+                        &map_for_parsing_string_to_i64);
+    parse_string_to_i64("-".to_string(),
+                        &map_for_parsing_string_to_i64);
+    parse_string_to_i64("12-3".to_string(),
+                        &map_for_parsing_string_to_i64);
+    parse_string_to_i64("".to_string(),
+                        &map_for_parsing_string_to_i64);
+    parse_string_to_i64("00".to_string(),
+                        &map_for_parsing_string_to_i64);
+    parse_string_to_i64("20a".to_string(),
+                        &map_for_parsing_string_to_i64);
+
+    print_i64_to_string_of(0);
+    print_i64_to_string_of(-1);
+    print_i64_to_string_of(2696690451456);
+    print_i64_to_string_of(-2696690451456);
+}
+
+

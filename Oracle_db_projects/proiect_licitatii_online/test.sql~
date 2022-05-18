@@ -1,0 +1,1 @@
+select a.auctionid , y.itemtypename , d.description , p.minbid , p.currentmaxbid , a.auctionstatus from auction a , itemtypelist y , auctiondescription d , auctionpriceinfo p where a.itemtypeid=y.itemtypeid and a.auctionid=d.auctionid and a.auctionid=p.auctionid and p.minbid>=0 and p.currentmaxbid<200 and a.auctionid=4;

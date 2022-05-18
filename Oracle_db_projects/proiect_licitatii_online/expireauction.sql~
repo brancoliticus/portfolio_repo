@@ -1,0 +1,6 @@
+create or replace procedure expireauction
+as
+begin
+	DBMS_OUTPUT.put_line('expireauction');
+end;
+/

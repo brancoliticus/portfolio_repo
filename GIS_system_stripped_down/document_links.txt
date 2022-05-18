@@ -1,0 +1,4 @@
+MapServer5.6.1_documentation.pdf
+Map Projections - A Working Manual , John P. Snyder
+ Cartographic Projection Procedures for the UNIX Environment - A User's Manual
+ Cartographic Projection Procedures Release 4 Interim Report

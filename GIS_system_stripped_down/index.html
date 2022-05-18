@@ -1,0 +1,578 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+
+    <style type="text/css">
+        body {
+            width:100%;
+            height:100%;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    font:sans-serif;
+    font-size:small;
+    }
+    #map {
+    width: 683px;
+    /* 1024x768 optimized */
+    height: 500px;
+    border: 1px solid black;
+    padding: 0px;
+    margin:0px auto;
+    margin-top:30px;
+    position:relative;
+    }
+    </style>
+
+    <script src="http://localhost/openlayers.js"></script>
+    <script src="http://localhost/proj4js/lib/proj4js-compressed.js">
+        </script>
+    <script type="text/javascript">
+
+    DrawPoints=OpenLayers.Class(OpenLayers.Control.DrawFeature,{
+
+        autoActivate:true,
+
+        initialize:function(layer,options){
+            var handler=OpenLayers.Handler.Point;
+            OpenLayers.Control.DrawFeature.prototype.initialize.apply(
+                this,[layer,handler,options]);
+        },
+        
+        drawFeature:function(geometry){
+            OpenLayers.Control.DrawFeature.prototype.drawFeature.apply(
+                this,arguments);
+
+            if(this.layer.features.length===1){
+            /*draw start point*/
+            /*apply special style*/
+            }
+            else if(this.layer.features.length===2){
+                this.deactivate();}
+        }
+    });
+
+    /*TODO LATER move somewhere else ? to Geo_stuff ?*/
+      var lon = 2414000;
+      var lat=5740000;
+    var zoom = 3;
+    var map, layer;
+
+    /*  globals to be used by the code controlling the simulation
+     *  to interact with the map */
+    var route_layer;
+    var end_points_layer;
+    var markers_layer;
+
+        function init(){
+            map = new OpenLayers.Map( 'map' );
+        
+        /* WMS LAYER */
+        var wms = new OpenLayers.Layer.WMS( "WMS",
+
+/*
+change here to suit your setup
+*/
+                "http://localhost/cgi-bin/mapserv",
+                {map: '/usr/lib/cgi-bin/osm-mapserver.map', 
+
+
+        layers: 'default', 
+        format: 'aggpng24',
+        transparent: 'off'},
+                {maxExtent: new OpenLayers.Bounds(
+                    2300000,5600000,2500000,5900000),
+                scales: [5000,10000,25000,50000,100000,250000,500000,
+                            1000000,2500000,5000000,10000000,25000000,
+                            50000000,100000000],
+                units: 'm',
+                projection:new OpenLayers.Projection("EPSG:900913"),
+                gutter:0,
+                ratio:1,
+                wrapDateLine: true,
+                isBaselayer:true,
+                singleTile:true,
+                transitionEffect:'resize'} );
+            map.addLayer(wms);
+            /* END WMS LAYER */
+
+            /* ROUTE/END_POINTS LAYERS */
+            route_layer=new OpenLayers.Layer.Vector("routes",{
+                styleMap:new OpenLayers.StyleMap(new OpenLayers.Style({
+                    strokeColor:"#ff9933",
+                    strokeWidth:3}))});
+            map.addLayer(route_layer);
+            end_points_layer=new OpenLayers.Layer.Vector("points");
+            map.addLayer(end_points_layer);
+            /* END ROUTE/END_POINTS LAYERS */
+
+            /* MARKERS LAYER FOR DIFFERENT THINGS */
+            /*markers_layer=new OpenaLayers.Layer.Markers("Markers");*/
+            /*TODO test start*/
+            markers_layer=new OpenLayers.Layer.Vector("Markers",{
+                    styleMap : new OpenLayers.StyleMap({
+                        "default" : new OpenLayers.Style(
+                            OpenLayers.Util.applyDefaults({
+                                externalGraphic :
+                                    "http://localhost/img/marker.png",
+                                graphicOpacity : 1,
+                                rotation : -45,
+                                pointRadius : 10
+                            },OpenLayers.Feature.Vector.style["default"])),
+                        "select":new OpenLayers.Style({
+                            externalGraphic:
+                                "http://localhost/img/marker-blue.png"})
+                    })
+                });
+            /* ?!? markers_select_control=new OpenLayers.Control.SelectFeature(
+                [markers_layer]) ?!?*/
+            map.addLayer(markers_layer);
+            markers_layer.events.on({
+                "featureselected":function(e){
+                    simulation_manager.html_display("selected car with id :"
+                        +e.feature.id);}
+            });
+            var car_select_control=new OpenLayers.Control.SelectFeature(
+                [markers_layer,end_points_layer],
+                {clickout:false,toggle:false,multiple:false,hover:false});
+            map.addControl(car_select_control);
+            car_select_control.activate();
+            /*TODO get from server*/
+            /*TODO test end*/
+            /* END CAR PATHS MARKERS LAYER */
+
+            //map.addLayers([wms]);
+            //map.addLayers([route_layer,end_points_layer]);
+            //map.addLayers([markers_layer]);
+            if(!map.getCenter()){
+                map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);}
+            map.addControl(new OpenLayers.Control.Scale('scale'));
+            map.addControl(new OpenLayers.Control.Permalink('permalink'));
+            map.addControl(new OpenLayers.Control.MousePosition());
+        
+            var draw_points=new DrawPoints(end_points_layer);
+            var drag_points=new OpenLayers.Control.DragFeature(
+                end_points_layer,{autoActivate:true});
+            map.addControls([draw_points,drag_points]);
+        }
+
+    /*Generic_server_request encapsulation of ajax request
+     *  server_request
+     *  set_query_parameters*/
+    function Generic_server_request(
+            server_location,
+            server_file,
+            client_callback_function){
+        /*private*/
+        var query_parameters="";
+        var xmlhttp;
+        var callback_function=function(){
+            if(xmlhttp.readyState===4
+                    && xmlhttp.status===200){
+                client_callback_function(
+                    xmlhttp.responseText);}
+            else if(xmlhttp.readyState===4){
+                alert("readystate "+xmlhttp.readyState
+                    +" status "+xmlhttp.status);}};
+        /*public+privileged*/
+        this.server_request=function(){
+            xmlhttp=new XMLHttpRequest();
+            xmlhttp.onreadystatechange=
+                (function(me){/* 2 inner function this to me */
+                    return function(){ /* 3 onreadystatechange function */
+                        return callback_function.apply(me,arguments);
+                        /* 4 go to callback function with proper this */
+                };}
+                (this)); /* 1 get this into the inner function*/
+            xmlhttp.open("GET",
+                server_location+
+                server_file+
+                query_parameters,
+                true);
+            xmlhttp.send();};
+        this.set_query_parameters=function(q_param){
+            query_parameters=q_param;};
+        /*TODO use in old_car_request,sim_cars_request*/}
+
+    /*TODO ?!?
+     *Gis_stuff will create and relate to the client gis stuff
+     *Geo_utils stuff moves here
+     *  add_markers(coord_list)
+     *  remove_markers
+     *  get_point1_coords
+     *  get_point2_coords
+     *  add_route*/
+
+    /* GGLLOOBBAALLSS */
+    var test_ajax;
+    var geo_utils;
+    var test_routing;
+    var utils;
+    var markers_manager;
+    var routes_manager;
+    var simulation_manager;
+    
+    /*Ajax_query_test test of ajax calls to server
+     *  ajax_test_request*/
+    test_ajax=(function(){
+        /*private*/
+        var query_request_manager;
+        function querry_read(){
+            return document.getElementById("querry_text").value;}
+        function is_local_input(){
+            if(document.test_ajax_form.input_place[0].checked){return true;}
+            return false;}
+        function is_server_input(){
+            if(document.test_ajax_form.input_place[1].checked){return true;}
+            return false;}
+        function server_querry(input){
+            if(typeof query_request_manager === 'undefined'){
+                query_request_manager=new Generic_server_request(
+                    "http://localhost/cgi-bin/",
+                    "querry_handler.php",
+                    utils.status_text);}
+            query_request_manager.set_query_parameters("?input="+input);
+            query_request_manager.server_request();}
+        /*public+privileged*/
+        return{
+            ajax_test_request : function(){
+                var input_from="unset";
+                if(is_local_input()){
+                    input_from=querry_read()+" <--> local";}
+                if(is_server_input()){
+                    input_from="waiting for server"+" <--> server";
+                    server_querry(querry_read());}
+                utils.status_text(input_from+" input location");}};
+        }());
+
+    /*Utilities
+     *  status_text*/
+    utils=(function(){
+        return{
+            status_text : function(aux){
+                document.getElementById("status_text").innerHTML=aux;}};
+        }());
+
+    /*Geo_utils utilities shared for the client gis functionality
+     *  point1 
+     *      return a list of [point1x,point1y] in the EPSG:4326 format
+     *      needed as input format on the server
+     *      with initial encoding data from the 2 selected points on the map
+     *  point2 
+     *      same EPSG:4326 format as point1
+     *  encode_4326_to_900913 */
+    geo_utils=(function(){
+        /*private*/
+        var format_4326;
+        var format_900913;
+        function p1x(){
+            return typeof end_points_layer.features[0]!=='undefined' ?
+                end_points_layer.features[0].geometry.x :
+                -1;}
+        function p1y(){
+            return typeof end_points_layer.features[0]!=='undefined' ?
+                end_points_layer.features[0].geometry.y :
+                -1;}
+        function p2x(){
+            return typeof end_points_layer.features[1]!=='undefined' ?
+                end_points_layer.features[1].geometry.x :
+                -1;}
+        function p2y(){
+            return typeof end_points_layer.features[1]!=='undefined' ? 
+                end_points_layer.features[1].geometry.y :
+                -1;}
+        function define_formats_for_transformation(){
+            if(typeof format_900913 === 'undefined'){
+                format_900913=new Proj4js.Proj('EPSG:900913');
+                format_4326=new Proj4js.Proj('EPSG:4326');}}
+        function encode_900913_to_4326(point){/*TODO document*/
+            var p;
+            define_formats_for_transformation();
+            if(point[0]===-1 || point[1]===-1){
+                return p;}
+            p=new Proj4js.Point(point[0],point[1]);
+            Proj4js.transform(format_900913,format_4326,p);
+            return [p.x,p.y];}
+        /*public+privileged*/
+        return{
+            encode_4326_to_900913 : function(point){/*TODO document*/
+                var p;
+                define_formats_for_transformation();
+                if(point[0]===-1 || point[1]===-1){
+                    return p;}
+                p=new Proj4js.Point(point[0],point[1]);
+                Proj4js.transform(format_4326,format_900913,p);
+                return [p.x,p.y];},
+            point1 : function(){
+                return encode_900913_to_4326([p1x(),p1y()]);},
+            point2 : function(){
+                return encode_900913_to_4326([p2x(),p2y()]);}};
+        }());
+
+    
+    /*Routing_test test of simple routing up to and including database
+     *  querry_route */
+    test_routing=(function(){
+        /*private*/
+        var routing_query_request;
+        function is_spd_algo(){
+            if(document.test_routing_form.route_algo[0].checked){
+                return true;}
+            return false;}
+        function is_spa_algo(){
+            if(document.test_routing_form.route_algo[1].checked){
+                return true;}
+            return false;}
+        function is_sps_algo(){
+            if(document.test_routing_form.route_algo[2].checked){
+                return true;}
+            return false;}
+        function read_algo(){
+            var algo="NONE";
+            if(is_spd_algo()){algo="SPD";}
+            else if(is_spa_algo()){algo="SPA";}
+            else if(is_sps_algo()){algo="SPS";}
+            return algo;}
+        function routing_query(method){
+            var spoint; 
+            var fpoint;
+            if(typeof routing_query_request === 'undefined'){
+                routing_query_request=new Generic_server_request(
+                    "http://localhost/cgi-bin/",
+                    "routing.php",
+                    routes_manager.route_to_vector_layer);}
+            spoint=geo_utils.point1();
+            fpoint=geo_utils.point2();
+            if(typeof spoint === 'undefined' ||
+                    typeof fpoint === 'undefined'){
+                utils.status_text(
+                    "Error . Please select 2 points on the map .");
+                return;}
+            routing_query_request.set_query_parameters(
+                "?startpoint="+spoint[0]+" "+spoint[1]+"&"+
+                "finalpoint=" +fpoint[0]+" "+fpoint[1]+"&"+
+                "method="+method);
+            routing_query_request.server_request();}
+        /*public+privileged*/
+        return{
+            query_route : function(){
+                var algo;
+                algo=read_algo();
+                if(algo.localeCompare("NONE") === 0){
+                    utils.status_text("|select a routing algorithm");}
+                else{
+                    routing_query(algo);}}};
+        }());
+
+    /*Routes_manager control of adding and removing
+     *      routes from the routes_layer
+     *  route_to_vector_layer
+     *  remove_last_route*/
+    routes_manager=(function(){
+        /*public + privileged*/
+        return{
+            remove_last_route : function(){
+                route_layer.removeAllFeatures();},
+            route_to_vector_layer : function(server_input){
+                var geojson_decoder=new OpenLayers.Format.GeoJSON({
+                    'internalProjection':
+                        new OpenLayers.Projection("EPSG:900913"),
+                    'externalProjection':
+                        new OpenLayers.Projection("EPSG:4326")});
+                var features=geojson_decoder.read(server_input);
+                if(features){
+                    if(features.constructor !== Array){
+                        features=[features];}
+                    
+                    routes_manager.remove_last_route();
+                    markers_manager.remove_last_markers();
+                    
+                    route_layer.addFeatures(features);}
+                else{
+                    utils.status_text("server output not read by "
+                        +"the openlayers geojson deserialiser");}}};
+    }());
+
+    /*Markers_manager control of adding and removing
+     *      markers from the markers_layer
+     *  add_markers
+     *  remove_last_markers
+     *  add_pos_on_route*/
+    markers_manager=(function(){
+        /*private*/
+        var markers=[];
+        var new_marker;
+        var index;
+        var icon_size;
+        var icon_offset;
+        var icon;
+        var nondestructive=false;
+        function put_marker(coords,text){
+            var proper_format_coords;
+            proper_format_coords=geo_utils.encode_4326_to_900913(coords);
+            new_marker=
+                new OpenLayers.Feature.Vector(
+                    new OpenLayers.Geometry.Point(
+                        proper_format_coords[0],
+                        proper_format_coords[1]));
+            markers_layer.addFeatures([new_marker]);
+            markers.push(new_marker);}
+        function remove_markers(){
+            /*release resources and clean up map for new markers*/
+            markers_layer.destroyFeatures();}
+        function remove_last_route(){
+             if(nondestructive === false){
+                routes_manager.remove_last_route();}}
+        /*public+privileged*/
+        return{
+            add_markers : function(new_marker_coords){           
+                markers_manager.remove_last_markers();
+                remove_last_route();/*allow adding nondestructively*/
+                
+                index=0;
+                while(index < new_marker_coords.length){
+                    put_marker(
+                        [new_marker_coords[index],
+                        new_marker_coords[index+1]],/*continue 1st arg*/
+                        "car in sim with id : " + (index/2+1) );  
+                    /*TODO test numbers on map markers*/
+                    index=index+2;}},
+            remove_last_markers : function(){
+                remove_markers();},
+            add_pos_on_route : function(new_marker_coords){
+                nondestructive=true;
+                markers_manager.add_markers(new_marker_coords);
+                nondestructive=false;}};
+        }());
+
+    /*Simulation_manager display input data/simulation status
+     *      API
+     *  insert_car 
+     *  query_car
+     *  query_cars_in_sim
+     *  advance_simulation
+     *  html_display
+     *      CALLBACKS
+     *  inserted_car_route 
+     *  queried_car_route
+     *  queried_car_positions
+     *  sim_advanced*/
+    simulation_manager=(function(){
+        /*private*/
+        var add_car_request_manager;
+        var old_car_request_manager;
+        var sim_cars_request_manager;
+        var advance_sim_request_manager;
+        function read_timestep(){
+            return document.getElementById("timestep_textb").value;}
+        /*public+privileged*/
+        return{
+            html_display : function(message){
+                document.getElementById(
+                    "map_display_status_text").value=message;},
+            insert_car : function(){
+                if(typeof add_car_request_manager === 'undefined'){
+                    add_car_request_manager=new Generic_server_request(
+                        "http://localhost/cgi-bin/",
+                        "car_to_simulation_from_2_points.php",
+                        simulation_manager.inserted_car_route);}
+                var spoint=geo_utils.point1();
+                var fpoint=geo_utils.point2();
+                if(typeof spoint === 'undefined' ||
+                        typeof fpoint === 'undefined'){
+                    this.html_display(
+                        "Error , please select"
+                        +" at least 2 points on the map");
+                    return;}
+                add_car_request_manager.set_query_parameters(
+                    "?startpoint="+spoint[0]+" "+spoint[1]+"&"+
+                    "finalpoint=" +fpoint[0]+" "+fpoint[1]);
+                add_car_request_manager.server_request();},
+            inserted_car_route : function(server_response){
+                var path_id_xpos_ypos=JSON.parse(server_response);
+                simulation_manager.html_display(
+                    "On map path of car with id="
+                    +path_id_xpos_ypos.car_id);
+                routes_manager.route_to_vector_layer(
+                    path_id_xpos_ypos.geojson);
+                markers_manager.add_pos_on_route(
+                    [path_id_xpos_ypos.xpos , path_id_xpos_ypos.ypos] );},
+            query_car : function(){
+                },/*TODO message path of the car with id=read from the user*/
+            queried_car_route : function(server_response){/*TODO*/
+                },
+            query_cars_in_sim : function(){
+                if(typeof sim_cars_request_manager === 'undefined'){
+                    sim_cars_request_manager=new Generic_server_request(
+                        "http://localhost/cgi-bin/",
+                        "query_cars_in_sim.php",
+                        simulation_manager.queried_car_positions);}
+                sim_cars_request_manager.server_request();},
+            queried_car_positions : function(server_response){
+                var carpos_array=JSON.parse(server_response);
+                markers_manager.add_markers(carpos_array);
+                simulation_manager.html_display(
+                    "Simulation advanced");},
+            advance_simulation : function(){
+                if(typeof advance_sim_request_manager === 'undefined'){
+                    advance_sim_request_manager=new Generic_server_request(
+                        "http://localhost/cgi-bin/",
+                        "advance_sim.php",
+                        simulation_manager.sim_advanced);}
+                advance_sim_request_manager.set_query_parameters(
+                    "?timestep="+read_timestep());
+                advance_sim_request_manager.server_request();},
+            sim_advanced : function(server_response){
+                var sim_status=JSON.parse(server_response);
+                if(sim_status.localeCompare('v') === 0){    
+                /*'v'-void<->no cars in sim*/
+                    simulation_manager.html_display(
+                        "No simulation ongoing");}
+                else if(sim_status.localeCompare('e') === 0){                                       
+                /*'e'-exited<->no cars in sim at this advance_sim call*/
+                    simulation_manager.html_display(
+                        "All cars in sim ended their course");
+                    markers_manager.remove_last_markers();}
+                else{
+                /*'k'-ok<->cars waiting for querying after sim advance*/
+                    simulation_manager.html_display(
+                        "Fetching positions of sim cars");
+                    simulation_manager.query_cars_in_sim();}}};
+        }());
+
+    </script>
+  </head>
+
+<body onload="init();">
+   <!-- optimized for 1024x768 resolution
+     --> 
+    <div style="width:1020px;margin:0 auto;">
+    <div style="width:690px;float:left;">
+     <div id="map">
+     </div>
+
+     <div id="controls">
+     <span id="scale" style="float:left;"></span>
+     <a href="#" id="permalink" style="float:right;">Direct link to currently displayed map</a>
+     </div>
+    </div>
+
+    <div style="width:324px;margin-left:690px;">
+
+    <form action="" method="GET" name="car_to_simulation_form"
+            onsubmit="(function(){return false;}());">
+        <input type="button" value="Car to simulation"
+            onclick="simulation_manager.insert_car();"><br>
+        <input type="button" value="Timestep sim (sec)"
+            onclick="simulation_manager.advance_simulation();">
+        <input type="text" id="timestep_textb"
+            style="width:50px;" value=""><br>
+        <input type="text" id="map_display_status_text"
+            style="width:300px;" onsubmit="(function(){return false;}());"
+            value="Nothing to display as markers" readonly>
+    </form>
+    </div>
+    </div>
+
+</body>
+</html>
+
